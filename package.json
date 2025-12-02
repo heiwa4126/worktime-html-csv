@@ -1,7 +1,7 @@
 {
 	"name": "@heiwa4126/worktime-html-csv",
 	"version": "0.0.0a",
-	"description": "working...",
+	"description": "Parse worktime HTML tables and convert them to pivot-style CSV with dual ESM/CJS support and CLI tool",
 	"type": "module",
 	"main": "./dist/parseWorktimeHtmlToData.cjs",
 	"types": "./dist/parseWorktimeHtmlToData.d.ts",
@@ -13,6 +13,11 @@
 			"types": "./dist/parseWorktimeHtmlToData.d.ts",
 			"import": "./dist/parseWorktimeHtmlToData.js",
 			"require": "./dist/parseWorktimeHtmlToData.cjs"
+		},
+		"./browser": {
+			"types": "./dist/parseWorktimeHtmlToData.browser.d.ts",
+			"import": "./dist/parseWorktimeHtmlToData.browser.js",
+			"require": "./dist/parseWorktimeHtmlToData.browser.cjs"
 		}
 	},
 	"files": [
@@ -22,31 +27,34 @@
 		"!dist/**/*.map"
 	],
 	"scripts": {
+		"cli": "tsx ./src/cli.ts",
 		"build": "tsup",
 		"test": "vitest run",
 		"test:run": "vitest run",
 		"test:watch": "vitest",
+		"test:browser": "vitest run --config vite.config.browser.ts",
 		"clean": "rm -rf dist",
-		"prepublishOnly": "pnpm run lint && pnpm run test && pnpm run clean && pnpm run build && pnpm run smoke-test",
+		"prepublishOnly": "pnpm run lint && pnpm run test && pnpm run test:browser && pnpm run clean && pnpm run build && pnpm run smoke-test",
 		"lint": "biome lint .",
 		"format": "biome format --write .",
 		"format:full": "pnpm pkg fix && biome format --write . && dprint fmt && textlint --fix \"**/*.md\"",
-		"smoke-test": "node examples/ex1.mjs && node examples/ex2.cjs && tsx examples/ex3.ts && node dist/main.js",
+		"smoke-test": "node examples/ex1.mjs && node examples/ex2.cjs && tsx examples/ex3.ts && node dist/cli.js --version",
 		"prepack": "clean-publish-scripts -c",
 		"postpack": "clean-publish-scripts -r"
 	},
 	"keywords": [
-		"hello-world",
-		"example",
-		"demo",
+		"worktime",
+		"html-parser",
+		"csv",
+		"pivot-table",
 		"typescript",
 		"esm",
 		"commonjs",
 		"cli",
-		"learning",
-		"sigstore",
-		"trusted-publishing",
-		"github-actions"
+		"tsup",
+		"linkedom",
+		"csv-stringify",
+		"trusted-publishing"
 	],
 	"author": "heiwa4126 <heiwa4126@gmail.com>",
 	"repository": {
@@ -62,6 +70,7 @@
 		"@biomejs/biome": "^2.3.8",
 		"@heiwa4126/clean-publish-scripts": "^0.0.1",
 		"@types/node": "^24.10.1",
+		"happy-dom": "^20.0.11",
 		"tsup": "^8.5.1",
 		"tsx": "^4.21.0",
 		"typescript": "^5.9.3",
