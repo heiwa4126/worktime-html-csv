@@ -2,7 +2,7 @@ import { defineConfig } from "tsup";
 
 export default defineConfig([
 	{
-		entry: ["src/parseWorktimeHtmlToData.ts"],
+		entry: ["src/parseWorktimeHtmlToData.ts", "src/worktimeCommon.ts"],
 		format: ["esm", "cjs"],
 		outDir: "dist",
 		bundle: false,
@@ -11,7 +11,7 @@ export default defineConfig([
 		clean: true,
 		dts: {
 			resolve: true,
-			entry: ["src/parseWorktimeHtmlToData.ts"],
+			entry: ["src/parseWorktimeHtmlToData.ts", "src/worktimeCommon.ts"],
 		},
 	},
 	// CLI
@@ -27,7 +27,7 @@ export default defineConfig([
 	},
 	// ブラウザ版ESM/CJS
 	{
-		entry: ["src/parseWorktimeHtmlToData.browser.ts"],
+		entry: ["src/parseWorktimeHtmlToData.browser.ts", "src/worktimeCommon.ts"],
 		format: ["esm", "cjs"],
 		outDir: "dist",
 		bundle: false,
@@ -36,7 +36,7 @@ export default defineConfig([
 		clean: false,
 		dts: {
 			resolve: true,
-			entry: ["src/parseWorktimeHtmlToData.browser.ts"],
+			entry: ["src/parseWorktimeHtmlToData.browser.ts", "src/worktimeCommon.ts"],
 		},
 	},
 	// ブラウザ版IIFEバンドル (Chrome拡張用 - 依存関係なし、小サイズ)

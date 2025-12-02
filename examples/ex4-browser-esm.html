@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browser ESM Test - worktime-html-csv</title>
+</head>
+<body>
+  <h1>Browser ESM Test</h1>
+  <p>Check the console for output.</p>
+
+  <script type="module">
+    // ESM版のブラウザライブラリをテスト
+    import { parseWorktimeHtmlToData, toWideArray } from '../dist/parseWorktimeHtmlToData.browser.js';
+
+    // テストHTMLデータ（test_data/test1.htmlから抜粋）
+    const testHtml = `<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>個人別日別実績集計 | 工数入力システム</title>
+</head>
+<body>
+<form id="MAINFORM">
+<input type="text" id="vD_SYORI_Y4" value="2025" />
+<input type="text" id="vD_SYORI_MM" value="11" />
+<table id="Grid1ContainerTbl">
+<thead>
+<tr>
+<th>日付</th>
+<th>工数</th>
+<th>工数詳細</th>
+<th>製造オーダ</th>
+<th>製造オーダ名</th>
+<th>工程</th>
+<th>工程名</th>
+<th>アクティビティ</th>
+<th>アクティビティ名</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>04(火)</td><td></td><td>1h 0m</td><td>AY999999</td><td>間接作業時間オーダー</td><td>A510</td><td>事務処理・定例業務</td><td></td><td></td></tr>
+<tr><td></td><td></td><td>0h 15m</td><td>AY999999</td><td>間接作業時間オーダー</td><td>G051</td><td>技術開発-施策投入051</td><td></td><td></td></tr>
+<tr><td></td><td></td><td>2h 30m</td><td>AY999999</td><td>間接作業時間オーダー</td><td>G053</td><td>技術開発-施策投入053</td><td></td><td></td></tr>
+<tr><td>05(水)</td><td></td><td>1h 0m</td><td>AY999999</td><td>間接作業時間オーダー</td><td>A510</td><td>事務処理・定例業務</td><td></td><td></td></tr>
+</tbody>
+</table>
+</form>
+</body>
+</html>`;
+
+    try {
+      console.log('Testing Browser ESM version...');
+
+      // HTMLをパース
+      const rows = parseWorktimeHtmlToData(testHtml);
+      console.log('Parsed rows:', rows);
+
+      // ワイド配列に変換
+      const wideArray = toWideArray(rows);
+      console.log('Wide array:', wideArray);
+
+      // 基本的な検証
+      if (rows.length > 0) {
+        console.log('✅ parseWorktimeHtmlToData: OK');
+      } else {
+        console.error('❌ parseWorktimeHtmlToData: Failed - no rows parsed');
+      }
+
+      if (wideArray.length > 0 && wideArray[0].includes('製造オーダ')) {
+        console.log('✅ toWideArray: OK');
+      } else {
+        console.error('❌ toWideArray: Failed');
+      }
+
+      console.log('✅ Browser ESM test completed successfully!');
+
+    } catch (error) {
+      console.error('❌ Test failed:', error);
+    }
+  </script>
+</body>
+</html>

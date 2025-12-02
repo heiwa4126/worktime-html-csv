@@ -38,7 +38,8 @@
 		"lint": "biome lint .",
 		"format": "biome format --write .",
 		"format:full": "pnpm pkg fix && biome format --write . && dprint fmt && textlint --fix \"**/*.md\"",
-		"smoke-test": "node examples/ex1.mjs && node examples/ex2.cjs && tsx examples/ex3.ts && node dist/cli.js --version",
+		"smoke-test": "node examples/ex1.mjs && node examples/ex2.cjs && tsx examples/ex3.ts && node examples/ex7-browser-smoke.mjs && node dist/cli.js --version",
+		"smoke-test:browser": "node examples/ex7-browser-smoke.mjs",
 		"prepack": "clean-publish-scripts -c",
 		"postpack": "clean-publish-scripts -r"
 	},
