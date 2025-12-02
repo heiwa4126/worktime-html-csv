@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { stringify } from "csv-stringify/sync";
 import fs from "node:fs";
-import { parseWorktimeHtmlToData } from "./parseWorktimeHtmlToData.js";
+import { parseWorktimeHtmlToData, toWideArray } from "./parseWorktimeHtmlToData.js";
 
 function printHelp() {
 	console.log(`Usage: worktime-html-csv [-h|--help] [-V|--version] <input.html> [<output.csv>]
@@ -46,46 +46,18 @@ async function main() {
 		console.error(`Failed to read input file: ${inputFile}`);
 		process.exit(2);
 	}
-	// ピボット集計: 製造オーダ・工程ごと、日付ごとに工数を横持ち
 	const rows = parseWorktimeHtmlToData(html);
 	if (!rows.length) {
 		console.error("No worktime data found in input HTML.");
 		process.exit(3);
 	}
-	// ユニークな日付を昇順で抽出
-	const dateSet = new Set<string>();
-	for (const row of rows) dateSet.add(row.date);
-	const dates = Array.from(dateSet).sort();
-	// 製造オーダ・工程ごとにグループ化
-	type Key = string;
-	const groupMap = new Map<
-		Key,
-		{ order: string; process: string; hoursByDate: Record<string, number> }
-	>();
-	for (const row of rows) {
-		const key = `${row.order}\t${row.process}`;
-		if (!groupMap.has(key)) {
-			groupMap.set(key, { order: row.order, process: row.process, hoursByDate: {} });
-		}
-		const rec = groupMap.get(key) as {
-			order: string;
-			process: string;
-			hoursByDate: Record<string, number>;
-		};
-		rec.hoursByDate[row.date] = row.hours;
-	}
-	// ヘッダ: 製造オーダ,工程,日付1,日付2,...（日本語固定）
-	const header = ["製造オーダ", "工程", ...dates];
-	const outRows = [header];
-	for (const { order, process, hoursByDate } of groupMap.values()) {
-		const line: string[] = [
-			String(order),
-			String(process),
-			...dates.map((d) => String(d in hoursByDate ? hoursByDate[d] : 0.0)),
-		];
-		outRows.push(line);
-	}
-	const csv = stringify(outRows, { header: false });
+	// toWideArrayで横持ち配列化
+	const outRows = toWideArray(rows);
+	// すべて文字列化
+	const csv = stringify(
+		outRows.map((r) => r.map(String)),
+		{ header: false },
+	);
 	if (outputFile) {
 		fs.writeFileSync(outputFile, csv);
 	} else {

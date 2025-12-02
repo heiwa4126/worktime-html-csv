@@ -68,6 +68,7 @@ export function parseWorktimeHtmlToData(html: string): WorktimeRow[] {
 		// 日付変換
 		const dateRaw =
 			(cells[idx("日付")] as { textContent?: string | null })?.textContent?.trim() || "";
+		if (!dateRaw) continue; // 空日付行はスキップ
 		// @ts-expect-error TypeScript strictNullChecks workaround
 		const day = dateRaw ? dateRaw.split("(")[0].padStart(2, "0") : "00";
 		const date = `${year}-${month}-${day}`;
@@ -88,3 +89,66 @@ export function parseWorktimeHtmlToData(html: string): WorktimeRow[] {
 	return result;
 }
 
+/**
+ * WorktimeRow[] を横持ちCSV形式の2次元配列（string|number）に変換する
+ * @param rows WorktimeRow[]
+ * @returns (string|number)[][]
+ */
+export function toWideArray(rows: WorktimeRow[]): (string | number)[][] {
+	if (!rows.length) return [];
+	// 日付列: WorktimeRow[]に現れる最小日付～最大日付まで全て
+	const dateList = rows.map((r) => r.date).sort();
+	const minDate = dateList[0];
+	const maxDate = dateList[dateList.length - 1];
+	function getDateArray(start: string, end: string): string[] {
+		const arr = [];
+		let d = new Date(start);
+		const endD = new Date(end);
+		while (d <= endD) {
+			const y = d.getFullYear();
+			const m = String(d.getMonth() + 1).padStart(2, "0");
+			const day = String(d.getDate()).padStart(2, "0");
+			arr.push(`${y}-${m}-${day}`);
+			d.setDate(d.getDate() + 1);
+		}
+		return arr;
+	}
+	const dates = getDateArray(minDate, maxDate);
+	// ヘッダー: 製造オーダ, 工程, ...日付...
+	const headers = ["製造オーダ", "工程", ...dates];
+	// 製造オーダ・工程ごとにグループ化
+	type Group = { order: string; process: string; [date: string]: string | number };
+	const groupMap = new Map<string, Group>();
+	for (const row of rows) {
+		const key = `${row.order}\t${row.process}`;
+		let group = groupMap.get(key);
+		if (!group) {
+			group = { order: row.order, process: row.process };
+			groupMap.set(key, group);
+		}
+		group[row.date] = row.hours;
+	}
+	// データ行生成
+	function formatHour(val: number): string {
+		// 小数点以下が .0 または .5 なら1桁、それ以外は2桁
+		if (Number.isInteger(val * 2)) {
+			return val.toFixed(1);
+		} else {
+			return val.toFixed(2);
+		}
+	}
+	const data: (string | number)[][] = [];
+	for (const g of groupMap.values()) {
+		const arr: (string | number)[] = [g.order, g.process];
+		for (const d of dates) {
+			const v = g[d] ?? 0.0;
+			if (typeof v === "number") {
+				arr.push(formatHour(v));
+			} else {
+				arr.push(v);
+			}
+		}
+		data.push(arr);
+	}
+	return [headers, ...data];
+}

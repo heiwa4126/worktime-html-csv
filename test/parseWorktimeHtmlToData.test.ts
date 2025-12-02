@@ -1,7 +1,15 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { parseWorktimeHtmlToData } from "../src/parseWorktimeHtmlToData.js";
+import { parseWorktimeHtmlToData, toWideArray } from "../src/parseWorktimeHtmlToData.js";
+
+// CSVを2次元配列に変換
+function parseCsvToArray(csv: string): string[][] {
+	return csv
+		.trim()
+		.split("\n")
+		.map((line) => line.split(","));
+}
 
 // テストデータのパス
 const htmlPath = path.join(__dirname, "../test_data/test1.html");
@@ -38,5 +46,14 @@ describe("parseWorktimeHtmlToData", () => {
 		const expected = parseExpectedCsvToRows(expectedCsv);
 		const actual = parseWorktimeHtmlToData(html).filter((r) => r.hours !== 0);
 		expect(actual).toEqual(expected);
+	});
+	it("toWideArray() で test1_expected.csv 配列と一致する", () => {
+		const html = readFileSync(htmlPath, "utf8");
+		const expectedCsv = readFileSync(expectedCsvPath, "utf8");
+		const rows = parseWorktimeHtmlToData(html);
+		const wide = toWideArray(rows);
+		const expectedArr = parseCsvToArray(expectedCsv);
+		// すべて文字列化して比較
+		expect(wide.map((r) => r.map(String))).toEqual(expectedArr);
 	});
 });

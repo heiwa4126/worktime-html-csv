@@ -1,88 +1,63 @@
+
 # Copilot Instructions
 
 ## Project Overview
 
-This is a TypeScript library (`@heiwa4126/worktime-html-csv`) that demonstrates modern npm packaging with dual ESM/CJS support and automated trusted publishing to npmjs via GitHub Actions with Sigstore attestation. The library exports a simple `hello()` function and provides a CLI tool.
+This is a TypeScript library (`@heiwa4126/worktime-html-csv`) for parsing worktime HTML tables and converting them to pivot-style CSVs. It supports modern npm packaging with dual ESM/CJS output, type definitions, and a CLI tool. The CLI and library are both ESM-first, and the project uses trusted publishing via GitHub Actions.
+
+## Main Features
+
+- **Library:**
+	- `parseWorktimeHtmlToData(html: string): WorktimeRow[]` parses a specific HTML table format and returns an array of worktime records.
+- **CLI:**
+	- Command: `worktime-html-csv [-h|--help] [-V|--version] <input.html> [<output.csv>]`
+	- Converts HTML to a pivot CSV with Japanese headers and dates as columns, matching the format of `test_data/test1_expected.csv`.
+	- Uses `csv-stringify` for robust CSV output.
+	- Version is shown via `import pkg from "../package.json" with { type: "json" }`.
+	- Provided via the `bin` field in `package.json`.
 
 ## Architecture & Build System
 
-**Dual Module Support Pattern:**
+- **Dual Module Support:**
+	- Bundled by `tsup` to both ESM (`.js`) and CJS (`.cjs`)
+	- `exports` field in `package.json` for both import/require
+	- TypeScript uses `module: nodenext`
+- **CLI:**
+	- Entry: `src/cli.ts` → `dist/cli.js`
+	- Shebang (`#!/usr/bin/env node`) required
+	- ESM imports, including `.js` extensions
+	- Registered as `worktime-html-csv` via `bin` in `package.json`
+- **CSV Output:**
+	- Uses `csv-stringify` for all CSV generation
+	- Output format: Japanese headers, dates as columns, 0.0 fill, all values as strings
 
-- Uses `tsup` for bundling with both ESM (`.js`) and CJS (`.cjs`) outputs
-- `package.json` exports field provides dual compatibility: `"import": "./dist/hello.js"` and `"require": "./dist/hello.cjs"`
-- TypeScript is configured with `"module": "nodenext"` for modern module resolution
-- CLI entry point (`src/main.ts`) uses ESM imports with `.js` extension for compatibility
+## Development & Testing
 
-**Critical Build Flow:**
+- **Build:** `pnpm run build` (via `tsup`)
+- **Test:** `pnpm test` (via `vitest`)
+- **Lint/Format:** `pnpm run lint`, `pnpm run format` (Biome)
+- **Smoke Test:** `pnpm run smoke-test` (tests ESM, CJS, TS, CLI)
+- **Try CLI:** `tsx src/cli.ts test_data/test1.html` or after build, `worktime-html-csv ...`
 
-```bash
-npm run build    # tsup builds both formats + types
-npm test        # vitest with TypeScript support
-npm run smoke-test  # Tests all three usage patterns (ESM/CJS/TS)
-```
+## File Structure
 
-## Key Development Patterns
+- `src/`: TypeScript source files (library, CLI)
+- `examples/`: Usage examples for ESM, CJS, TS
+- `test/`: Unit tests
+- `test_data/`: HTML and expected CSV samples
+- `dist/`: Build output
 
-**Testing Strategy:**
+## Publishing & CI/CD
 
-- Use `vitest` with globals enabled (see `vite.config.ts`)
-- Import source files with `.js` extensions even from `.ts` files: `import { hello } from "../src/hello.js"`
-- Run `npm run smoke-test` to verify all module formats work correctly
-
-**Package.json Script Conventions:**
-
-- `prepublishOnly`: Runs full build + test pipeline automatically before any publish
-- `prepack`/`postpack`: Strips scripts from package.json during packaging for security
-- Scripts use `npm pkg` commands for package.json manipulation
-
-**Formatting & Linting:**
-
-- Biome handles both formatting and linting (replaces ESLint + Prettier)
-- Line width: 100 characters
-- Strict TypeScript with `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes`
-
-## Publishing & CI/CD Workflow
-
-**Trusted Publishing Setup:**
-This project uses npm's trusted publishing feature. The workflow in `.github/workflows/publish.yml`:
-
-- Triggers on semantic version tags: `v1.2.3` (release) or `v1.2.3-rc.1` (prerelease)
-- Only runs if `github.repository_owner == github.actor` (security)
-- Uses OIDC authentication (no npm tokens required)
-- Automatically applies `--tag dev` for prerelease versions (contains `-`)
-
-**Version Tagging:**
-
-- Normal releases: `v1.2.3` → `latest` tag on npm
-- Prereleases: `v1.2.3-rc.1` → `dev` tag on npm
-
-## File Structure Conventions
-
-- `src/`: TypeScript source files
-- `examples/`: Usage examples for ESM (`.mjs`), CJS (`.cjs`), and TypeScript (`.ts`)
-- `scripts/`: Build utilities (e.g., `clean-pkg.mjs` for package.json cleanup)
-- `dist/`: Build output (both `.js` ESM and `.cjs` CommonJS files)
-
-## Development Commands
-
-```bash
-# Development workflow
-npm run build        # Build both formats + generate types
-npm test            # Run tests once
-npm run test:watch  # Watch mode testing
-npm run smoke-test  # Test all module formats work
-
-# Code quality
-npm run lint        # Biome linting
-npm run format      # Biome formatting
-
-# Publishing preparation
-npm pack --dry-run  # Preview package contents
-```
+- **Trusted Publishing:**
+	- Uses npm OIDC trusted publishing (no tokens)
+	- GitHub Actions workflow triggers on version tags
+	- Prereleases get `dev` tag, releases get `latest`
 
 ## Important Notes
 
 - Always use `.js` extensions in TypeScript imports for Node.js ESM compatibility
-- The `"type": "module"` in package.json makes this an ESM-first project
-- CLI script requires the shebang `#!/usr/bin/env node` in the built output
-- Never commit npm tokens - this project uses OIDC trusted publishing exclusively
+- The project is ESM-first (`"type": "module"` in package.json)
+- CLI requires a shebang in the built output
+- Never commit npm tokens (OIDC only)
+- All CSV output is handled by `csv-stringify`
