@@ -87,3 +87,4 @@ export function parseWorktimeHtmlToData(html: string): WorktimeRow[] {
 	}
 	return result;
 }
+
