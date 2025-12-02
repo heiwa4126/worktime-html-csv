@@ -3,17 +3,14 @@
 	"version": "0.0.0a",
 	"description": "working...",
 	"type": "module",
-	"main": "./dist/hello.cjs",
-	"types": "./dist/hello.d.ts",
+	"main": "./dist/parseWorktimeHtmlToData.cjs",
+	"types": "./dist/parseWorktimeHtmlToData.d.ts",
 	"exports": {
 		".": {
-			"types": "./dist/hello.d.ts",
-			"import": "./dist/hello.js",
-			"require": "./dist/hello.cjs"
+			"types": "./dist/parseWorktimeHtmlToData.d.ts",
+			"import": "./dist/parseWorktimeHtmlToData.js",
+			"require": "./dist/parseWorktimeHtmlToData.cjs"
 		}
-	},
-	"bin": {
-		"heiwa4126-worktime-html-csv": "./dist/main.js"
 	},
 	"files": [
 		"dist/**/*.js",
@@ -69,5 +66,8 @@
 	},
 	"engines": {
 		"node": ">=18.0.0"
+	},
+	"dependencies": {
+		"linkedom": "^0.18.12"
 	}
 }
