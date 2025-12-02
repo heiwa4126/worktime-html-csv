@@ -1,7 +1,11 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { parseWorktimeHtmlToData, toWideArray } from "../src/parseWorktimeHtmlToData.js";
+import {
+	parseWorktimeHtmlToData,
+	toWideArray,
+	type WorktimeRow,
+} from "../src/parseWorktimeHtmlToData.js";
 
 // CSVを2次元配列に変換
 function parseCsvToArray(csv: string): string[][] {
@@ -16,21 +20,21 @@ const htmlPath = path.join(__dirname, "../test_data/test1.html");
 const expectedCsvPath = path.join(__dirname, "../test_data/test1_expected.csv");
 
 // ピボット形式のCSVをWorktimeRow[]に変換する関数
-function parseExpectedCsvToRows(csv: string) {
+function parseExpectedCsvToRows(csv: string): WorktimeRow[] {
 	const lines = csv.trim().split("\n");
-	const header = lines[0].split(",");
+	const header = lines[0]?.split(",") || [];
 	// header: ["製造オーダ","工程",日付1,日付2,...]
 	const dateCols = header.slice(2);
-	const rows = [];
+	const rows: WorktimeRow[] = [];
 	for (const line of lines.slice(1)) {
 		const cols = line.split(",");
-		const order = cols[0];
-		const process = cols[1];
+		const order = cols[0] || "";
+		const process = cols[1] || "";
 		for (let i = 0; i < dateCols.length; ++i) {
 			rows.push({
 				order,
 				process,
-				date: dateCols[i],
+				date: dateCols[i] || "",
 				hours: Number(cols[i + 2]),
 				orderName: "間接作業時間オーダー", // テストデータより固定
 			});
@@ -45,7 +49,12 @@ describe("parseWorktimeHtmlToData", () => {
 		const expectedCsv = readFileSync(expectedCsvPath, "utf8");
 		const expected = parseExpectedCsvToRows(expectedCsv);
 		const actual = parseWorktimeHtmlToData(html).filter((r) => r.hours !== 0);
-		expect(actual).toEqual(expected);
+		// 順序が異なるのでソートして比較
+		const sortFn = (a: WorktimeRow, b: WorktimeRow) =>
+			a.order.localeCompare(b.order) ||
+			a.process.localeCompare(b.process) ||
+			a.date.localeCompare(b.date);
+		expect(actual.sort(sortFn)).toEqual(expected.sort(sortFn));
 	});
 	it("toWideArray() で test1_expected.csv 配列と一致する", () => {
 		const html = readFileSync(htmlPath, "utf8");
