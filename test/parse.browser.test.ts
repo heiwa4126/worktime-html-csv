@@ -1,11 +1,7 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import {
-	parseWorktimeHtmlToData,
-	toWideArray,
-	type WorktimeRow,
-} from "../src/parseWorktimeHtmlToData.browser.js";
+import { parseWorktimeHtmlToData, toWideArray, type WorktimeRow } from "../src/parse.browser.js";
 
 // CSVを2次元配列に変換
 function parseCsvToArray(csv: string): string[][] {

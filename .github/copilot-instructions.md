@@ -34,15 +34,15 @@ This is a TypeScript library (`@heiwa4126/worktime-html-csv`) for parsing workti
 	- TypeScript uses `module: nodenext`
 	- Two versions: Node.js (with linkedom) and Browser (with native DOM)
 - **Node.js Version:**
-	- Entry: `src/parseWorktimeHtmlToData.ts`
+	- Entry: `src/parse.ts`
 	- Uses `linkedom` for HTML parsing
 	- Outputs: ESM, CJS, and TypeScript definitions
 - **Browser Version:**
-	- Entry: `src/parseWorktimeHtmlToData.browser.ts`
+	- Entry: `src/parse.browser.ts`
 	- Uses native `DOMParser` API (via `/// <reference lib="dom" />`)
 	- Outputs: ESM, CJS, TypeScript definitions, and IIFE bundle
 	- Import path: `@heiwa4126/worktime-html-csv/browser`
-	- IIFE bundle: `dist/parseWorktimeHtmlToData.browser.global.js` (~4KB minified)
+	- IIFE bundle: `dist/parse.browser.global.js` (~4KB minified)
 	- Global name for IIFE: `WorktimeHtmlCsv`
 - **CLI:**
 	- Entry: `src/cli.ts` → `dist/cli.js`
@@ -80,9 +80,9 @@ This is a TypeScript library (`@heiwa4126/worktime-html-csv`) for parsing workti
 ## File Structure
 
 - `src/`: TypeScript source files (library, CLI)
-	- `worktimeCommon.ts`: Common types and utility functions (DOM-independent)
-	- `parseWorktimeHtmlToData.ts`: Node.js version (linkedom)
-	- `parseWorktimeHtmlToData.browser.ts`: Browser version (native DOM)
+	- `common.ts`: Common types and utility functions (DOM-independent)
+	- `parse.ts`: Node.js version (linkedom)
+	- `parse.browser.ts`: Browser version (native DOM)
 	- `cli.ts`: CLI tool
 - `examples/`: Usage examples for ESM, CJS, TS
 - `test/`: Unit tests
@@ -107,4 +107,4 @@ This is a TypeScript library (`@heiwa4126/worktime-html-csv`) for parsing workti
 - CLI requires a shebang in the built output
 - Never commit npm tokens (OIDC only)
 - All CSV output is handled by `csv-stringify`
-- Common code (types, utilities) is shared via `worktimeCommon.ts` to avoid duplication
+- Common code (types, utilities) is shared via `common.ts` to avoid duplication

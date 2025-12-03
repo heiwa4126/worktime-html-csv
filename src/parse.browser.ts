@@ -1,14 +1,8 @@
-// worktime-html-csv/src/parseWorktimeHtmlToData.browser.ts
-// HTML工数集計テーブルをブラウザネイティブDOMでパースし、ピボットCSV化に必要な中間データを返す
-// 入力: HTML文字列、出力: ピボット集計用データ配列
-// Chrome拡張機能などブラウザ環境用（linkedom不要）
-
 /// <reference lib="dom" />
 
-import { convertTimeToHour, type WorktimeRow } from "./worktimeCommon.js";
+import { convertTimeToHour, toWideArray, type WorktimeRow } from "./common.js";
 
-// 共通関数・型を再エクスポート
-export { toWideArray } from "./worktimeCommon.js";
+export { toWideArray };
 export type { WorktimeRow };
 
 /**

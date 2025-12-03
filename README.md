@@ -69,7 +69,7 @@ const wideArray = toWideArray(rows);
 For direct script inclusion without module bundlers:
 
 ```html
-<script src="path/to/parseWorktimeHtmlToData.browser.global.js"></script>
+<script src="path/to/parse.browser.global.js"></script>
 <script>
   const html = document.documentElement.outerHTML;
   const rows = WorktimeHtmlCsv.parseWorktimeHtmlToData(html);
@@ -122,18 +122,18 @@ pnpm run prepublishOnly
 
 The project builds multiple formats:
 
-- `dist/parseWorktimeHtmlToData.js` - Node.js ESM version (uses linkedom)
-- `dist/parseWorktimeHtmlToData.cjs` - Node.js CommonJS version (uses linkedom)
-- `dist/parseWorktimeHtmlToData.d.ts` - TypeScript definitions
-- `dist/parseWorktimeHtmlToData.browser.js` - Browser ESM version (native DOM)
-- `dist/parseWorktimeHtmlToData.browser.cjs` - Browser CommonJS version (native DOM)
-- `dist/parseWorktimeHtmlToData.browser.global.js` - IIFE bundle (~4KB minified)
+- `dist/parse.js` - Node.js ESM version (uses linkedom)
+- `dist/parse.cjs` - Node.js CommonJS version (uses linkedom)
+- `dist/parse.d.ts` - TypeScript definitions
+- `dist/parse.browser.js` - Browser ESM version (native DOM)
+- `dist/parse.browser.cjs` - Browser CommonJS version (native DOM)
+- `dist/parse.browser.global.js` - IIFE bundle (~4KB minified)
 - `dist/cli.js` - CLI tool
 
 ## Why Two Versions?
 
-- **Node.js version** (`parseWorktimeHtmlToData.ts`): Uses `linkedom` for fast HTML parsing in Node.js environments
-- **Browser version** (`parseWorktimeHtmlToData.browser.ts`): Uses native `DOMParser` API for browser environments
+- **Node.js version** (`parse.ts`): Uses `linkedom` for fast HTML parsing in Node.js environments
+- **Browser version** (`parse.browser.ts`): Uses native `DOMParser` API for browser environments
   - Much smaller bundle size (~4KB vs ~265KB with linkedom)
   - No external dependencies needed in browser
   - Perfect for Chrome extensions and web applications

@@ -12,9 +12,7 @@ global.Element = window.Element;
 global.HTMLElement = window.HTMLElement;
 
 // ブラウザ版ライブラリをインポート
-const { parseWorktimeHtmlToData, toWideArray } = await import(
-	"../dist/parseWorktimeHtmlToData.browser.js"
-);
+const { parseWorktimeHtmlToData, toWideArray } = await import("../dist/parse.browser.js");
 
 console.log("Testing browser version with happy-dom...\n");
 

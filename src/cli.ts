@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { stringify } from "csv-stringify/sync";
 import fs from "node:fs";
-import { parseWorktimeHtmlToData, toWideArray } from "./parseWorktimeHtmlToData.js";
+import { parseWorktimeHtmlToData, toWideArray } from "./parse.js";
 
 function printHelp() {
 	console.log(`Usage: worktime-html-csv [-h|--help] [-V|--version] <input.html> [<output.csv>]

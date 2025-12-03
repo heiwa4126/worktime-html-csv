@@ -1,4 +1,3 @@
-// worktime-html-csv/src/worktimeCommon.ts
 // HTML工数集計の共通型定義とユーティリティ関数
 // Node.js版とブラウザ版で共通利用
 
