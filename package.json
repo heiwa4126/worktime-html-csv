@@ -3,22 +3,24 @@
 	"version": "0.0.0-a",
 	"description": "Parse worktime HTML tables and convert them to pivot-style CSV with dual ESM/CJS support and CLI tool",
 	"type": "module",
-	"main": "./dist/parseWorktimeHtmlToData.cjs",
-	"module": "./dist/parseWorktimeHtmlToData.js",
-	"types": "./dist/parseWorktimeHtmlToData.d.ts",
+	"main": "./dist/parse.cjs",
+	"module": "./dist/parse.js",
+	"types": "./dist/parse.d.ts",
+	"browser": "./dist/parse.browser.global.js",
 	"bin": {
-		"worktime-html-csv": "dist/cli.js"
+		"worktime-html-csv": "dist/cli.js",
+		"off-the-books": "dist/cli.js"
 	},
 	"exports": {
 		".": {
-			"types": "./dist/parseWorktimeHtmlToData.d.ts",
-			"import": "./dist/parseWorktimeHtmlToData.js",
-			"require": "./dist/parseWorktimeHtmlToData.cjs"
+			"types": "./dist/parse.d.ts",
+			"import": "./dist/parse.js",
+			"require": "./dist/parse.cjs"
 		},
 		"./browser": {
-			"types": "./dist/parseWorktimeHtmlToData.browser.d.ts",
-			"import": "./dist/parseWorktimeHtmlToData.browser.js",
-			"require": "./dist/parseWorktimeHtmlToData.browser.cjs"
+			"types": "./dist/parse.browser.d.ts",
+			"import": "./dist/parse.browser.js",
+			"require": "./dist/parse.browser.cjs"
 		}
 	},
 	"files": [

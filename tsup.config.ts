@@ -51,6 +51,6 @@ export default defineConfig([
 		dts: false,
 		globalName: "WorktimeHtmlCsv",
 		minify: true,
-		outExtension: () => ({ js: ".browser.global.js" }),
+		outExtension: () => ({ js: ".global.js" }),
 	},
 ]);
