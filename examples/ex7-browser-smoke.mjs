@@ -40,7 +40,7 @@ if (!wideArray[0]?.includes("製造オーダ")) {
 
 // 最初の数行を表示
 console.log("\nFirst row (headers):");
-console.log(wideArray[0].slice(0, 5).join(", ") + "...");
+console.log(`${wideArray[0].slice(0, 5).join(", ")}...`);
 
 console.log("\n✅ Browser version smoke test passed!");
 
