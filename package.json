@@ -29,6 +29,7 @@
 	],
 	"scripts": {
 		"cli": "tsx ./src/cli.ts",
+		"cli1": "tsx ./src/cli.ts test_data/test1.html",
 		"build": "tsup",
 		"test": "vitest run",
 		"test:run": "vitest run",

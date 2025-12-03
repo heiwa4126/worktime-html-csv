@@ -1,23 +1,21 @@
 /// <reference lib="dom" />
 
-import { convertTimeToHour, toWideArray, type WorktimeRow } from "./common.js";
-
-export { toWideArray };
-export type { WorktimeRow };
+import { convertTimeToHour } from "./common.js";
+import type { WorktimeRow } from "./common.js";
+export { toWideArray } from "./common.js";
+export type { WorktimeRow } from "./common.js";
 
 /**
- * 工数管理HTMLから集計用データを抽出（ブラウザ版）
- * @param html HTML文字列
+ * 工数管理HTMLのDocumentから集計用データを抽出（共通ロジック）
+ * @param doc HTML Document
  * @returns WorktimeRow[]
  */
-export function parseWorktimeHtmlToData(html: string): WorktimeRow[] {
-	const parser = new DOMParser();
-	const document = parser.parseFromString(html, "text/html");
+export function parseWorktimeDomToData(doc: Document): WorktimeRow[] {
 	// 年月取得
-	const year = (document.getElementById("vD_SYORI_Y4") as HTMLInputElement)?.value || "";
-	const month = (document.getElementById("vD_SYORI_MM") as HTMLInputElement)?.value || "";
+	const year = (doc.getElementById("vD_SYORI_Y4") as HTMLInputElement)?.value || "";
+	const month = (doc.getElementById("vD_SYORI_MM") as HTMLInputElement)?.value || "";
 	// テーブル取得
-	const table = document.getElementById("Grid1ContainerTbl");
+	const table = doc.getElementById("Grid1ContainerTbl");
 	if (!table) return [];
 	// ヘッダ行・データ行取得
 	const rows = Array.from(table.querySelectorAll("tr"));
@@ -54,4 +52,15 @@ export function parseWorktimeHtmlToData(html: string): WorktimeRow[] {
 		});
 	}
 	return result;
+}
+
+/**
+ * 工数管理HTMLから集計用データを抽出（ブラウザ版・HTML文字列）
+ * @param html HTML文字列
+ * @returns WorktimeRow[]
+ */
+export function parseWorktimeHtmlToData(html: string): WorktimeRow[] {
+	const parser = new DOMParser();
+	const doc = parser.parseFromString(html, "text/html");
+	return parseWorktimeDomToData(doc);
 }
