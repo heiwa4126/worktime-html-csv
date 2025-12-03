@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Browser IIFE Test - worktime-html-csv</title>
-</head>
-<body>
-  <h1>Browser IIFE Test</h1>
-  <p>Check the console for output.</p>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Browser IIFE Test - worktime-html-csv</title>
+	</head>
+	<body>
+		<h1>Browser IIFE Test</h1>
+		<p>Check the console for output.</p>
 
-  <!-- IIFE版のブラウザライブラリをロード -->
-  <script src="../dist/parseWorktimeHtmlToData.browser.browser.global.js"></script>
+		<!-- IIFE版のブラウザライブラリをロード -->
+		<script src="../dist/parseWorktimeHtmlToData.browser.browser.global.js"></script>
 
-  <script>
-    // IIFE版はグローバル変数 WorktimeHtmlCsv として利用可能
+		<script>
+		// IIFE版はグローバル変数 WorktimeHtmlCsv として利用可能
     const { parseWorktimeHtmlToData, toWideArray } = WorktimeHtmlCsv;
 
     // テストHTMLデータ（test_data/test1.htmlから抜粋）
@@ -82,6 +82,6 @@
     } catch (error) {
       console.error('❌ Test failed:', error);
     }
-  </script>
-</body>
+		</script>
+	</body>
 </html>

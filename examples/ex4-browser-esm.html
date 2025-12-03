@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Browser ESM Test - worktime-html-csv</title>
-</head>
-<body>
-  <h1>Browser ESM Test</h1>
-  <p>Check the console for output.</p>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Browser ESM Test - worktime-html-csv</title>
+	</head>
+	<body>
+		<h1>Browser ESM Test</h1>
+		<p>Check the console for output.</p>
 
-  <script type="module">
-    // ESM版のブラウザライブラリをテスト
+		<script type="module">
+		// ESM版のブラウザライブラリをテスト
     import { parseWorktimeHtmlToData, toWideArray } from '../dist/parseWorktimeHtmlToData.browser.js';
 
     // テストHTMLデータ（test_data/test1.htmlから抜粋）
@@ -78,6 +78,6 @@
     } catch (error) {
       console.error('❌ Test failed:', error);
     }
-  </script>
-</body>
+		</script>
+	</body>
 </html>

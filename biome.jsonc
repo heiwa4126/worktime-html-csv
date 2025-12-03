@@ -21,6 +21,7 @@
 		"rules": {
 			"recommended": true,
 			"style": {
+				"useSortedImports": "off",
 				"noParameterAssign": "error",
 				"useAsConstAssertion": "error",
 				"useDefaultParameterLast": "error",
