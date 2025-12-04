@@ -1,3 +1,4 @@
+#! /usr/bin/env node
 import fs from "node:fs";
 import { parseWorktimeHtmlToData, toCSVString, toWideArray } from "./parse.js";
 
