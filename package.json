@@ -27,7 +27,8 @@
 		"dist/**/*.js",
 		"dist/**/*.cjs",
 		"dist/**/*.d.ts",
-		"!dist/**/*.map"
+		"dist/**/*.d.cts",
+		"dist/**/*.map"
 	],
 	"scripts": {
 		"cli": "tsx ./src/cli.ts",
