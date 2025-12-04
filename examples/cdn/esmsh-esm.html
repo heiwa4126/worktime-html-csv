@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Browser ESM Test (CDN) - worktime-html-csv</title>
+		<script type="importmap">
+		{
+			"imports": {
+				"papaparse": "https://esm.sh/papaparse@5"
+			}
+		}
+		</script>
+		<link rel="stylesheet" href="../ex.css" />
+	</head>
+	<body>
+		<h1>Browser ESM Test (CDN)</h1>
+
+		<button onclick="test()">table to CSV</button>
+		<pre id="csv">(CSV empty)</pre>
+
+		<form id="MAINFORM">
+			<input type="text" id="vD_SYORI_Y4" value="2025" />
+			<input type="text" id="vD_SYORI_MM" value="11" />
+			<table id="Grid1ContainerTbl">
+				<thead>
+					<tr>
+						<th>日付</th>
+						<th>工数</th>
+						<th>工数詳細</th>
+						<th>製造オーダ</th>
+						<th>製造オーダ名</th>
+						<th>工程</th>
+						<th>工程名</th>
+						<th>アクティビティ</th>
+						<th>アクティビティ名</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>04(火)</td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A510</td>
+						<td>事務処理・定例業務</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>0h 15m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G051</td>
+						<td>技術開発-施策投入051</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G053</td>
+						<td>技術開発-施策投入053</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>05(水)</td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A510</td>
+						<td>事務処理・定例業務</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>0h 15m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G051</td>
+						<td>技術開発-施策投入051</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G053</td>
+						<td>技術開発-施策投入053</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>06(木)</td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A510</td>
+						<td>事務処理・定例業務</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>0h 15m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A130</td>
+						<td>設計構築</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>3h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G051</td>
+						<td>技術開発-施策投入051</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>4h 45m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G053</td>
+						<td>技術開発-施策投入053</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>07(金)</td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A510</td>
+						<td>事務処理・定例業務</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>2h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A220</td>
+						<td>テスト・検証</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>3h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G051</td>
+						<td>技術開発-施策投入051</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>3h 15m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G053</td>
+						<td>技術開発-施策投入053</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>11(火)</td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A510</td>
+						<td>事務処理・定例業務</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A910</td>
+						<td>社内教育</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>3h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G051</td>
+						<td>技術開発-施策投入051</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>3h 30m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G053</td>
+						<td>技術開発-施策投入053</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>12(水)</td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A510</td>
+						<td>事務処理・定例業務</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>4h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G051</td>
+						<td>技術開発-施策投入051</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>4h 15m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G053</td>
+						<td>技術開発-施策投入053</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>13(木)</td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A510</td>
+						<td>事務処理・定例業務</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A220</td>
+						<td>テスト・検証</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>3h 15m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G051</td>
+						<td>技術開発-施策投入051</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>4h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G053</td>
+						<td>技術開発-施策投入053</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>14(金)</td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A510</td>
+						<td>事務処理・定例業務</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>4h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G051</td>
+						<td>技術開発-施策投入051</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>4h 30m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G053</td>
+						<td>技術開発-施策投入053</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>17(月)</td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A510</td>
+						<td>事務処理・定例業務</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>0h 45m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A130</td>
+						<td>設計構築</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>0h 45m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A220</td>
+						<td>テスト・検証</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>4h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A970</td>
+						<td>社外教育</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>0h 30m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G051</td>
+						<td>技術開発-施策投入051</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>2h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G053</td>
+						<td>技術開発-施策投入053</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>18(火)</td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A510</td>
+						<td>事務処理・定例業務</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A910</td>
+						<td>社内教育</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>3h 30m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G051</td>
+						<td>技術開発-施策投入051</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>4h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G053</td>
+						<td>技術開発-施策投入053</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>19(水)</td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A510</td>
+						<td>事務処理・定例業務</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>2h 30m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G051</td>
+						<td>技術開発-施策投入051</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>3h 30m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G053</td>
+						<td>技術開発-施策投入053</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>20(木)</td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A510</td>
+						<td>事務処理・定例業務</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>3h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G051</td>
+						<td>技術開発-施策投入051</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>4h 45m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G053</td>
+						<td>技術開発-施策投入053</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>21(金)</td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A510</td>
+						<td>事務処理・定例業務</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>2h 15m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G051</td>
+						<td>技術開発-施策投入051</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>3h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G053</td>
+						<td>技術開発-施策投入053</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>25(火)</td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A510</td>
+						<td>事務処理・定例業務</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>1h 30m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A220</td>
+						<td>テスト・検証</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>3h 15m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G051</td>
+						<td>技術開発-施策投入051</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>3h 15m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G053</td>
+						<td>技術開発-施策投入053</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>26(水)</td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A510</td>
+						<td>事務処理・定例業務</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>6h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G051</td>
+						<td>技術開発-施策投入051</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>2h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G053</td>
+						<td>技術開発-施策投入053</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>27(木)</td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A510</td>
+						<td>事務処理・定例業務</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>2h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A120</td>
+						<td>要件定義</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>0h 30m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A130</td>
+						<td>設計構築</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>3h 30m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G051</td>
+						<td>技術開発-施策投入051</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>0h 30m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G053</td>
+						<td>技術開発-施策投入053</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>28(金)</td>
+						<td></td>
+						<td>1h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>A510</td>
+						<td>事務処理・定例業務</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>3h 0m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G051</td>
+						<td>技術開発-施策投入051</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>2h 30m</td>
+						<td>AY999999</td>
+						<td>間接作業時間オーダー</td>
+						<td>G053</td>
+						<td>技術開発-施策投入053</td>
+						<td></td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+		<script type="module">
+		// ESM版のブラウザライブラリをテスト
+import { parseWorktimeDomToData, toWideArray, toCSVString } from 'https://esm.sh/@heiwa4126/worktime-html-csv/browser';
+
+function test() {
+	try {
+		console.log('Testing Browser ESM version...');
+
+		// HTMLをパース
+		const rows = parseWorktimeDomToData(document);
+		console.log('Parsed rows:', rows);
+
+		// 基本的な検証
+		if (rows.length > 0) {
+			console.log('✅ parseWorktimeDomToData: OK');
+		} else {
+			console.error('❌ parseWorktimeDomToData: Failed - no rows parsed');
+		}
+
+		// ワイド配列に変換
+		const wideArray = toWideArray(rows);
+		console.log('Wide array:', wideArray);
+
+		if (wideArray.length > 0 && wideArray[0].includes('製造オーダ')) {
+			console.log('✅ toWideArray: OK');
+		} else {
+			console.error('❌ toWideArray: Failed');
+		}
+
+		// CSV文字列に変換
+		const csv = toCSVString(wideArray);
+		console.log('CSV output:\n', csv);
+
+		// 結果を画面に表示
+		document.getElementById('csv').textContent = csv;
+
+		// CSVをクリップボードにコピー
+		navigator.clipboard.writeText(csv)
+			.then(() => {
+				console.log('✅ CSV copied to clipboard');
+			})
+			.catch(err => {
+				console.error('❌ Failed to copy to clipboard:', err);
+			});
+
+		console.log('✅ Browser ESM test completed successfully!');
+
+	} catch (error) {
+		console.error('❌ Test failed:', error);
+	}
+}
+window.test = test;
+		</script>
+	</body>
+</html>
