@@ -2,7 +2,7 @@
 
 import { convertTimeToHour } from "./common.js";
 import type { WorktimeRow } from "./common.js";
-export { toWideArray } from "./common.js";
+export { toWideArray, toCSVString } from "./common.js";
 export type { WorktimeRow } from "./common.js";
 
 /**

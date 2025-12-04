@@ -1,7 +1,6 @@
 #!/usr/bin/env node
-import { stringify } from "csv-stringify/sync";
 import fs from "node:fs";
-import { parseWorktimeHtmlToData, toWideArray } from "./parse.js";
+import { parseWorktimeHtmlToData, toCSVString, toWideArray } from "./parse.js";
 
 function printHelp() {
 	console.log(`Usage: worktime-html-csv [-h|--help] [-V|--version] <input.html> [<output.csv>]
@@ -54,10 +53,8 @@ async function main() {
 	// toWideArrayで横持ち配列化
 	const outRows = toWideArray(rows);
 	// すべて文字列化
-	const csv = stringify(
-		outRows.map((r) => r.map(String)),
-		{ header: false },
-	);
+	const csv = toCSVString(outRows);
+
 	if (outputFile) {
 		fs.writeFileSync(outputFile, csv);
 	} else {

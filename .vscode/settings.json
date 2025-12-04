@@ -1,5 +1,5 @@
 {
-	"cSpell.words": ["linkedom", "outbase", "Rekor", "SYORI", "worktime"],
+	"cSpell.words": ["linkedom", "outbase", "papaparse", "Rekor", "SYORI", "worktime"],
 	"editor.codeActionsOnSave": {
 		"source.organizeImports": "never"
 	}

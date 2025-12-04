@@ -1,7 +1,7 @@
 import { type HTMLInputElement, parseHTML } from "linkedom";
-import { convertTimeToHour, toWideArray, type WorktimeRow } from "./common.js";
+import { convertTimeToHour, toWideArray, toCSVString, type WorktimeRow } from "./common.js";
 
-export { toWideArray };
+export { toWideArray, toCSVString };
 export type { WorktimeRow };
 
 /**

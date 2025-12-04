@@ -1,5 +1,6 @@
 // HTML工数集計の共通型定義とユーティリティ関数
 // Node.js版とブラウザ版で共通利用
+import Papa from "papaparse";
 
 export interface WorktimeRow {
 	order: string;
@@ -96,4 +97,9 @@ export function toWideArray(rows: WorktimeRow[]): (string | number)[][] {
 		data.push(arr);
 	}
 	return [headers, ...data];
+}
+
+export function toCSVString(outRows: (string | number)[][]): string {
+	// PapaParseは配列→CSV文字列変換にunparseを使う
+	return Papa.unparse(outRows, { header: false });
 }

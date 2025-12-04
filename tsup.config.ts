@@ -50,7 +50,7 @@ export default defineConfig([
 		clean: false,
 		dts: false,
 		globalName: "WorktimeHtmlCsv",
-		minify: true,
+		minify: false,
 		outExtension: () => ({ js: ".global.js" }),
 	},
 ]);
