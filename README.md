@@ -1,72 +1,76 @@
-# heiwa4126-worktime-html-csv (@heiwa4126/worktime-html-csv)
+# worktime-html-csv (@heiwa4126/worktime-html-csv)
 
 [![npm version](https://img.shields.io/npm/v/@heiwa4126/worktime-html-csv.svg)](https://www.npmjs.com/package/@heiwa4126/worktime-html-csv)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org/)
 
-Parse worktime HTML tables and convert them to pivot-style CSV. Supports dual ES modules/CommonJS output with TypeScript type definitions and a CLI tool.
+ある特定のウェブページの HTML の特定テーブルを処理して、CSV として出力する npm パッケージです。きわめて特定の目的にだけ使われるので、汎用性は低いです。
 
-Features:
+テンプレートとして流用できるかもしれません。
 
-- **Node.js version**: Uses `linkedom` for fast HTML parsing
-- **Browser version**: Uses native DOM APIs for Chrome extensions and web applications
-- **IIFE bundle**: Minified browser bundle (~4KB) for direct script inclusion
-- **CLI tool**: Command-line interface for HTML to CSV conversion
-- **Dual format**: Both ESM and CommonJS support
+## 仕様
 
-## Installation
+- **Node.js バージョン**: [linkedom](https://www.npmjs.com/package/linkedom) を使って高速に処理
+- **ブラウザ バージョン**: ネイティブ DOM API を使用。また Node とブラウザの両方で動作するように CSV ライブラリは [papaparse](https://www.npmjs.com/package/papaparse) を使用
+- **IIFE バンドル**: ブラウザ上では ESM スクリプトだけでなく、クラシックスクリプト版のビルドも添付(バンドル済み)
+- **CLI ツール**: HTML ファイルから CSV に変換するコマンドラインツール付き
+- **デュアルフォーマット**: ライブラリとして使う場合は ESM, TS(.d.ts), CommonJS をサポート
+
+## インストール
 
 ```bash
 pnpm add @heiwa4126/worktime-html-csv
-# or
+# または
 npm install @heiwa4126/worktime-html-csv
 ```
 
-## Usage
+## 使い方
 
-### As a library (Node.js)
+### ライブラリとして利用 (Node.js)
 
 #### ES Modules (MJS)
 
+[examples/ex1.mjs](examples/ex1.mjs)
+
 ```typescript
-import { parseWorktimeHtmlToData, toWideArray } from "@heiwa4126/worktime-html-csv";
+import { parseWorktimeHtmlToData, toWideArray, toCSVString } from "@heiwa4126/worktime-html-csv";
 import { readFileSync } from "fs";
 
-const html = readFileSync("worktime.html", "utf8");
+const html = readFileSync("test_data/test1.html", "utf8");
 const rows = parseWorktimeHtmlToData(html);
 const wideArray = toWideArray(rows);
-console.log(wideArray);
+console.log(toCSVString(wideArray));
 ```
 
 #### CommonJS (CJS)
 
+[examples/ex2.cjs](examples/ex2.cjs)
+
 ```javascript
-const { parseWorktimeHtmlToData, toWideArray } = require("@heiwa4126/worktime-html-csv");
+const { parseWorktimeHtmlToData, toWideArray, toCSVString } = require("@heiwa4126/worktime-html-csv");
 const { readFileSync } = require("fs");
 
 const html = readFileSync("worktime.html", "utf8");
 const rows = parseWorktimeHtmlToData(html);
 const wideArray = toWideArray(rows);
-console.log(wideArray);
+console.log(toCSVString(wideArray));
 ```
 
-### As a library (Browser/Chrome Extension)
+### ブラウザ版をライブラリとして使用
 
-Use the browser version for Chrome extensions and web applications:
+ウェブアプリケーションや Chrome 拡張ではブラウザ版を利用してください
 
 ```typescript
 import { parseWorktimeHtmlToData, toWideArray } from "@heiwa4126/worktime-html-csv/browser";
-
-// In a Chrome extension content script or web page
-const html = document.documentElement.outerHTML;
-const rows = parseWorktimeHtmlToData(html);
-const wideArray = toWideArray(rows);
+// 以下同様
 ```
 
-### As an IIFE bundle (Browser)
+ブラウザ版には DOM を直接参照する `parseWorktimeDomToData(document)` があります。
 
-For direct script inclusion without module bundlers:
+### HTML 上で利用
+
+クラッシックスクリプト版:
 
 ```html
 <script src="path/to/parse.browser.global.js"></script>
@@ -78,83 +82,95 @@ For direct script inclusion without module bundlers:
 </script>
 ```
 
-### As a CLI tool
+ESM スクリプト版:
 
-After installation, you can use the CLI command:
-
-```bash
-worktime-html-csv input.html output.csv
-# or output to stdout
-worktime-html-csv input.html
+```html
+<script type="importmap">
+  {
+    "imports": {
+      "papaparse": "https://esm.sh/papaparse@5"
+    }
+  }
+</script>
+<script type="module">
+  import { parseWorktimeHtmlToData, toWideArray } from "path/to/parse.browser.js";
+  const rows = parseWorktimeHtmlToData(testHtml);
+  const wideArray = toWideArray(rows);
+</script>
 ```
 
+詳しくは `examples/*.html` を参照
+
+### CLI ツールとして利用
+
+インストール後、CLI コマンドが利用できます。
+
+```console
+$ worktime-html-csv -h
+
+Usage: worktime-html-csv [-h|--help] [-v|--version] <input.html> [<output.csv>]
+
 Options:
+  -h, --help     Show this help message
+  -v, --version  Show version
 
-- `-h, --help`: Show help message
-- `-V, --version`: Show version
+If <output.csv> is omitted, output will be written to stdout.
+```
 
-## Development
+## 開発
 
 ```bash
-# Install dependencies
+# 依存パッケージのインストール
 pnpm install
 
-# Build
+# ビルド
 pnpm run build
 
-# Test (Node.js version)
+# テスト(Node.js版)
 pnpm test
 
-# Test (Browser version)
+# テスト(ブラウザ版)
 pnpm run test:browser
 
 # Lint
 pnpm run lint
 
-# Format
+# フォーマット
 pnpm run format
 
-# Full prepublish check (lint, test both versions, clean, build, smoke test)
+# 公開前チェック(lint, 両バージョンのテスト, clean, build, smoke test)
 pnpm run prepublishOnly
 ```
 
-## Build Output
+## ビルド成果物
 
-The project builds multiple formats:
+本プロジェクトは複数のフォーマットでビルドされます:
 
-- `dist/parse.js` - Node.js ESM version (uses linkedom)
-- `dist/parse.cjs` - Node.js CommonJS version (uses linkedom)
-- `dist/parse.d.ts` - TypeScript definitions
-- `dist/parse.browser.js` - Browser ESM version (native DOM)
-- `dist/parse.browser.cjs` - Browser CommonJS version (native DOM)
-- `dist/parse.browser.global.js` - IIFE bundle (~4KB minified)
-- `dist/cli.js` - CLI tool
+- `dist/parse.js` - Node.js ESM 版(linkedom 使用)
+- `dist/parse.cjs` - Node.js CommonJS 版(linkedom 使用)
+- `dist/parse.d.ts` - TypeScript 型定義
+- `dist/parse.browser.js` - ブラウザ用 ESM 版(ネイティブ DOM 使用)
+- `dist/parse.browser.cjs` - ブラウザ用 CommonJS 版(ネイティブ DOM 使用)
+- `dist/parse.browser.global.js` - IIFE バンドル(バンドル&minify 済み)
+- `dist/cli.js` - CLI ツール
 
-## Why Two Versions?
+## ブラウザ版のテスト
 
-- **Node.js version** (`parse.ts`): Uses `linkedom` for fast HTML parsing in Node.js environments
-- **Browser version** (`parse.browser.ts`): Uses native `DOMParser` API for browser environments
-  - Much smaller bundle size (~4KB vs ~265KB with linkedom)
-  - No external dependencies needed in browser
-  - Perfect for Chrome extensions and web applications
+1. ビルド:
+   `pnpm run build`
 
-## Scripts
+2. 簡易 HTTP サーバーを起動:
+   `pnpm start`
 
-- `pnpm run build` - Build all versions (Node.js, Browser, IIFE, CLI)
-- `pnpm test` - Run Node.js version tests
-- `pnpm run test:browser` - Run browser version tests
-- `pnpm run test:watch` - Run tests in watch mode
-- `pnpm run cli` - Run CLI tool via tsx (development)
-- `pnpm run clean` - Remove build artifacts
-- `pnpm run lint` - Lint code with Biome
-- `pnpm run format` - Format code with Biome
-- `pnpm run smoke-test` - Run smoke tests for all outputs
+3. ブラウザでテストページを開く:
 
-## License
+   - ESM 版: http://localhost:3000/examples/ex4-browser-esm.html (見た目がつまらない)
+   - ESM 版 2: http://localhost:3000/examples/ex4-browser-esm2.html (クリップボードにコピーされる)
+   - クラッシック版: http://localhost:3000/examples/ex5-browser-iife.html (見た目がつまらない)
+   - クラッシック版 2: http://localhost:3000/examples/ex5-browser-iife2.html (クリップボードにコピーされる)
+
+4. ブラウザのコンソール(F12)で結果を確認
+
+## ライセンス
 
 MIT
-
-## Note
-
-[NOTE-ja.md](https://github.com/heiwa4126/heiwa4126-worktime-html-csv/blob/main/NOTE-ja.md) (on GitHub)
-これがこのプロジェクトの本体。

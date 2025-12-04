@@ -99,6 +99,16 @@ export function toWideArray(rows: WorktimeRow[]): (string | number)[][] {
 	return [headers, ...data];
 }
 
+/**
+ * 2次元配列をCSV形式の文字列に変換する
+ *
+ * @param outRows - CSV データを表す2次元配列。各内部配列は1行を表し、要素は文字列または数値。
+ * @returns CSV形式の文字列（ヘッダーなし）
+ *
+ * @remarks
+ * PapaParse の `unparse` メソッドを使用して配列をCSV形式に変換します。
+ * header オプションは false に設定されているため、ヘッダー行は生成されません。
+ */
 export function toCSVString(outRows: (string | number)[][]): string {
 	// PapaParseは配列→CSV文字列変換にunparseを使う
 	return Papa.unparse(outRows, { header: false });

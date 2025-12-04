@@ -1,13 +1,12 @@
-#!/usr/bin/env node
 import fs from "node:fs";
 import { parseWorktimeHtmlToData, toCSVString, toWideArray } from "./parse.js";
 
 function printHelp() {
-	console.log(`Usage: worktime-html-csv [-h|--help] [-V|--version] <input.html> [<output.csv>]
+	console.log(`Usage: worktime-html-csv [-h|--help] [-v|--version] <input.html> [<output.csv>]
 
 Options:
   -h, --help     Show this help message
-  -V, --version  Show version
+  -v, --version  Show version
 
 If <output.csv> is omitted, output will be written to stdout.`);
 }
@@ -24,7 +23,7 @@ async function main() {
 		printHelp();
 		process.exit(0);
 	}
-	if (argv.includes("-V") || argv.includes("--version")) {
+	if (argv.includes("-v") || argv.includes("--version")) {
 		printVersion();
 		process.exit(0);
 	}

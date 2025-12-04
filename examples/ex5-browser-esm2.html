@@ -4,7 +4,6 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Browser ESM Test 2 - worktime-html-csv</title>
-		<!-- ESM版のブラウザライブラリをロード -->
 		<script type="importmap">
 		{
 			"imports": {
@@ -725,7 +724,7 @@
 		</form>
 		<script type="module">
 		// ESM版のブラウザライブラリをテスト
-    import { parseWorktimeDomToData, toWideArray, toCSVString } from '../dist/parse.browser.js';
+import { parseWorktimeDomToData, toWideArray, toCSVString } from '../dist/parse.browser.js';
 
 function test() {
 	try {
