@@ -67,12 +67,12 @@
 	"author": "heiwa4126 <heiwa4126@gmail.com>",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/heiwa4126/heiwa4126-worktime-html-csv.git"
+		"url": "git+https://github.com/heiwa4126/worktime-html-csv.git"
 	},
 	"bugs": {
-		"url": "https://github.com/heiwa4126/heiwa4126-worktime-html-csv/issues"
+		"url": "https://github.com/heiwa4126/worktime-html-csv/issues"
 	},
-	"homepage": "https://github.com/heiwa4126/heiwa4126-worktime-html-csv#readme",
+	"homepage": "https://github.com/heiwa4126/worktime-html-csv#readme",
 	"license": "MIT",
 	"devDependencies": {
 		"@biomejs/biome": "^2.3.8",
