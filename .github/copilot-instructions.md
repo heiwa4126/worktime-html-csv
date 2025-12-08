@@ -107,3 +107,7 @@ This is a TypeScript library (`@heiwa4126/worktime-html-csv`) for parsing workti
 - Never commit npm tokens (OIDC only)
 - All CSV output is handled by `csv-stringify`
 - Common code (types, utilities) is shared via `common.ts` to avoid duplication
+
+## Commit Message Policy
+
+- All commit messages must be written in **English**.

@@ -1,62 +1,19 @@
 import { readFileSync } from "node:fs";
-import path from "node:path";
 import { describe, expect, it } from "vitest";
+
 import { toCSVString } from "../src/common.js";
-import { parseWorktimeHtmlToData, toWideArray, type WorktimeRow } from "../src/parse.js";
+import { parseWorktimeHtmlToData, toWideArray } from "../src/parse.js";
+import {
+	expectedCsvPath,
+	htmlPath,
+	parseCsvToArray,
+	parseExpectedCsvToRows,
+	type WorktimeRow,
+} from "./testUtils.js";
 
-// CSVを2次元配列に変換
-function parseCsvToArray(csv: string): string[][] {
-	return csv
-		.trim()
-		.split("\n")
-		.map((line) => line.split(","));
-}
+import { setupLineEndingMatcher } from "./testUtils.js";
 
-// テストデータのパス
-const htmlPath = path.join(__dirname, "../test_data/test1.html");
-const expectedCsvPath = path.join(__dirname, "../test_data/test1_expected.csv");
-
-// 改行コードを無視して文字列比較するカスタムマッチャー
-expect.extend({
-	toEqualIgnoreLineEndings(received: string, expected: string) {
-		const normalize = (str: string) => str.replace(/\r\n|\r|\n/g, "\n").replace(/\n+$/, "");
-		const pass = normalize(received) === normalize(expected);
-		return {
-			pass,
-			message: () =>
-				pass
-					? "改行コードを無視して一致しました。"
-					: "改行コード以外に差分があります。\n受信: " +
-						normalize(received) +
-						"\n期待: " +
-						normalize(expected),
-		};
-	},
-});
-
-// ピボット形式のCSVをWorktimeRow[]に変換する関数
-function parseExpectedCsvToRows(csv: string): WorktimeRow[] {
-	const lines = csv.trim().split("\n");
-	const header = lines[0]?.split(",") || [];
-	// header: ["製造オーダ","工程",日付1,日付2,...]
-	const dateCols = header.slice(2);
-	const rows: WorktimeRow[] = [];
-	for (const line of lines.slice(1)) {
-		const cols = line.split(",");
-		const order = (cols[0] || "").trim();
-		const process = (cols[1] || "").trim();
-		for (let i = 0; i < dateCols.length; ++i) {
-			rows.push({
-				order,
-				process,
-				date: (dateCols[i] || "").trim(),
-				hours: Number((cols[i + 2] || "").trim()),
-				orderName: "間接作業時間オーダー", // テストデータより固定
-			});
-		}
-	}
-	return rows.filter((r) => r.hours !== 0); // 0時間は除外（実データに合わせる場合）
-}
+setupLineEndingMatcher();
 
 describe("parseWorktimeHtmlToData", () => {
 	it("test1.html → test1_expected.csv相当のデータを返す", () => {
@@ -91,11 +48,9 @@ describe("parseWorktimeHtmlToData", () => {
 		const csvNoBom = toCSVString(wide);
 		const csvWithBom = toCSVString(wide, true);
 		// BOMなし
-		// @ts-expect-error Vitest拡張マッチャー型回避
-		expect(csvNoBom).toEqualIgnoreLineEndings(expectedCsv);
+		expect(csvNoBom).toEqual(expectedCsv);
 		// BOMあり
 		const expectedCsvWithBom = `\ufeff${expectedCsv}`;
-		// @ts-expect-error Vitest拡張マッチャー型回避
-		expect(csvWithBom).toEqualIgnoreLineEndings(expectedCsvWithBom);
+		expect(csvWithBom).toEqual(expectedCsvWithBom);
 	});
 });

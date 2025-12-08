@@ -108,11 +108,12 @@ ESM スクリプト版:
 ```console
 $ worktime-html-csv -h
 
-Usage: worktime-html-csv [-h|--help] [-v|--version] <input.html> [<output.csv>]
+Usage: worktime-html-csv [-h|--help] [-v|--version] [--bom] <input.html> [<output.csv>]
 
 Options:
-  -h, --help     Show this help message
-  -v, --version  Show version
+	-h, --help     Show this help message
+	-v, --version  Show version
+	--bom          Add UTF-8 BOM for Excel compatibility
 
 If <output.csv> is omitted, output will be written to stdout.
 ```

@@ -118,6 +118,6 @@ export function toWideArray(rows: WorktimeRow[]): (string | number)[][] {
  * ```
  */
 export function toCSVString(outRows: (string | number)[][], withBom = false): string {
-	const csv = Papa.unparse(outRows, { header: false });
+	const csv = Papa.unparse(outRows, { header: false, newline: "\r\n" });
 	return withBom ? `\ufeff${csv}` : csv;
 }
