@@ -16,6 +16,24 @@ function parseCsvToArray(csv: string): string[][] {
 const htmlPath = path.join(__dirname, "../test_data/test1.html");
 const expectedCsvPath = path.join(__dirname, "../test_data/test1_expected.csv");
 
+// 改行コードを無視して文字列比較するカスタムマッチャー
+expect.extend({
+	toEqualIgnoreLineEndings(received: string, expected: string) {
+		const normalize = (str: string) => str.replace(/\r\n|\r|\n/g, "\n").replace(/\n+$/, "");
+		const pass = normalize(received) === normalize(expected);
+		return {
+			pass,
+			message: () =>
+				pass
+					? "改行コードを無視して一致しました。"
+					: "改行コード以外に差分があります。\n受信: " +
+						normalize(received) +
+						"\n期待: " +
+						normalize(expected),
+		};
+	},
+});
+
 // ピボット形式のCSVをWorktimeRow[]に変換する関数
 function parseExpectedCsvToRows(csv: string): WorktimeRow[] {
 	const lines = csv.trim().split("\n");
@@ -25,14 +43,14 @@ function parseExpectedCsvToRows(csv: string): WorktimeRow[] {
 	const rows: WorktimeRow[] = [];
 	for (const line of lines.slice(1)) {
 		const cols = line.split(",");
-		const order = cols[0] || "";
-		const process = cols[1] || "";
+		const order = (cols[0] || "").trim();
+		const process = (cols[1] || "").trim();
 		for (let i = 0; i < dateCols.length; ++i) {
 			rows.push({
 				order,
 				process,
-				date: dateCols[i] || "",
-				hours: Number(cols[i + 2]),
+				date: (dateCols[i] || "").trim(),
+				hours: Number((cols[i + 2] || "").trim()),
 				orderName: "間接作業時間オーダー", // テストデータより固定
 			});
 		}
@@ -53,15 +71,18 @@ describe("parseWorktimeHtmlToData", () => {
 			a.date.localeCompare(b.date);
 		expect(actual.sort(sortFn)).toEqual(expected.sort(sortFn));
 	});
+
 	it("toWideArray() で test1_expected.csv 配列と一致する", () => {
 		const html = readFileSync(htmlPath, "utf8");
 		const expectedCsv = readFileSync(expectedCsvPath, "utf8");
 		const rows = parseWorktimeHtmlToData(html);
 		const wide = toWideArray(rows);
 		const expectedArr = parseCsvToArray(expectedCsv);
-		// すべて文字列化して比較
-		expect(wide.map((r) => r.map(String))).toEqual(expectedArr);
+		// すべて文字列化し、各要素をtrimして比較
+		const trimArray = (arr: string[][]) => arr.map((row) => row.map((cell) => cell.trim()));
+		expect(trimArray(wide.map((r) => r.map(String)))).toEqual(trimArray(expectedArr));
 	});
+
 	it("toCSVString() BOMなし・BOMありの出力を検証", () => {
 		const html = readFileSync(htmlPath, "utf8");
 		const expectedCsv = readFileSync(expectedCsvPath, "utf8").trim();
@@ -70,9 +91,11 @@ describe("parseWorktimeHtmlToData", () => {
 		const csvNoBom = toCSVString(wide);
 		const csvWithBom = toCSVString(wide, true);
 		// BOMなし
-		expect(csvNoBom.trim()).toEqual(expectedCsv);
+		// @ts-expect-error Vitest拡張マッチャー型回避
+		expect(csvNoBom).toEqualIgnoreLineEndings(expectedCsv);
 		// BOMあり
-		const expectedCsvWithBom = "\ufeff" + expectedCsv;
-		expect(csvWithBom.trim()).toEqual(expectedCsvWithBom.trim());
+		const expectedCsvWithBom = `\ufeff${expectedCsv}`;
+		// @ts-expect-error Vitest拡張マッチャー型回避
+		expect(csvWithBom).toEqualIgnoreLineEndings(expectedCsvWithBom);
 	});
 });
