@@ -103,13 +103,21 @@ export function toWideArray(rows: WorktimeRow[]): (string | number)[][] {
  * 2次元配列をCSV形式の文字列に変換する
  *
  * @param outRows - CSV データを表す2次元配列。各内部配列は1行を表し、要素は文字列または数値。
+ * @param withBom - 先頭に UTF-8 BOM (\ufeff) を付与するか。Excel 用。デフォルトは false。
  * @returns CSV形式の文字列（ヘッダーなし）
  *
  * @remarks
  * PapaParse の `unparse` メソッドを使用して配列をCSV形式に変換します。
  * header オプションは false に設定されているため、ヘッダー行は生成されません。
+ * BOM 付与は Excel での文字化け防止用です。
+ *
+ * @example
+ * ```ts
+ * toCSVString(data, true) // BOM付きCSV
+ * toCSVString(data) // BOMなしCSV（デフォルト）
+ * ```
  */
-export function toCSVString(outRows: (string | number)[][]): string {
-	// PapaParseは配列→CSV文字列変換にunparseを使う
-	return Papa.unparse(outRows, { header: false });
+export function toCSVString(outRows: (string | number)[][], withBom = false): string {
+	const csv = Papa.unparse(outRows, { header: false });
+	return withBom ? `\ufeff${csv}` : csv;
 }

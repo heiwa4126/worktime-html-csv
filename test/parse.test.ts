@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
+import { toCSVString } from "../src/common.js";
 import { parseWorktimeHtmlToData, toWideArray, type WorktimeRow } from "../src/parse.js";
 
 // CSVを2次元配列に変換
@@ -60,5 +61,18 @@ describe("parseWorktimeHtmlToData", () => {
 		const expectedArr = parseCsvToArray(expectedCsv);
 		// すべて文字列化して比較
 		expect(wide.map((r) => r.map(String))).toEqual(expectedArr);
+	});
+	it("toCSVString() BOMなし・BOMありの出力を検証", () => {
+		const html = readFileSync(htmlPath, "utf8");
+		const expectedCsv = readFileSync(expectedCsvPath, "utf8").trim();
+		const rows = parseWorktimeHtmlToData(html);
+		const wide = toWideArray(rows);
+		const csvNoBom = toCSVString(wide);
+		const csvWithBom = toCSVString(wide, true);
+		// BOMなし
+		expect(csvNoBom.trim()).toEqual(expectedCsv);
+		// BOMあり
+		const expectedCsvWithBom = "\ufeff" + expectedCsv;
+		expect(csvWithBom.trim()).toEqual(expectedCsvWithBom.trim());
 	});
 });

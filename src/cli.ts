@@ -3,11 +3,12 @@ import fs from "node:fs";
 import { parseWorktimeHtmlToData, toCSVString, toWideArray } from "./parse.js";
 
 function printHelp() {
-	console.log(`Usage: worktime-html-csv [-h|--help] [-v|--version] <input.html> [<output.csv>]
+	console.log(`Usage: worktime-html-csv [-h|--help] [-v|--version] [--bom] <input.html> [<output.csv>]
 
 Options:
-  -h, --help     Show this help message
-  -v, --version  Show version
+	-h, --help     Show this help message
+	-v, --version  Show version
+	--bom          Add UTF-8 BOM for Excel compatibility
 
 If <output.csv> is omitted, output will be written to stdout.`);
 }
@@ -32,8 +33,11 @@ async function main() {
 		printHelp();
 		process.exit(1);
 	}
-	const inputFile = argv[0];
-	const outputFile = argv[1];
+	const bomFlagIdx = argv.indexOf("--bom");
+	const hasBom = bomFlagIdx !== -1;
+	const filteredArgv = argv.filter((a) => a !== "--bom");
+	const inputFile = filteredArgv[0];
+	const outputFile = filteredArgv[1];
 	if (!inputFile) {
 		console.error("Input file is required.");
 		process.exit(1);
@@ -53,7 +57,7 @@ async function main() {
 	// toWideArrayで横持ち配列化
 	const outRows = toWideArray(rows);
 	// すべて文字列化
-	const csv = toCSVString(outRows);
+	const csv = toCSVString(outRows, hasBom);
 
 	if (outputFile) {
 		fs.writeFileSync(outputFile, csv);
