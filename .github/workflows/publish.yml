@@ -25,7 +25,7 @@ jobs:
       # Only need to read contents
       contents: read
     with:
-      scan-args: "."
+      scan-args: "-r ."
 
   publish:
     # Only run if pushed by repository owner and after OSV scan passes
