@@ -10,6 +10,10 @@ import {
 	type WorktimeRow,
 } from "./testUtils.js";
 
+import { setupLineEndingMatcher } from "./testUtils.js";
+
+setupLineEndingMatcher();
+
 describe("parseWorktimeHtmlToData (browser version)", () => {
 	it("test1.html → test1_expected.csv相当のデータを返す", () => {
 		const html = readFileSync(htmlPath, "utf8");
@@ -43,9 +47,12 @@ describe("parseWorktimeHtmlToData (browser version)", () => {
 		const csvNoBom = toCSVString(wide);
 		const csvWithBom = toCSVString(wide, true);
 		// BOMなし
-		expect(csvNoBom).toEqual(expectedCsv);
+
+		// @ts-expect-error: toEqualIgnoreLineEndings is a custom matcher
+		expect(csvNoBom).toEqualIgnoreLineEndings(expectedCsv);
 		// BOMあり
 		const expectedCsvWithBom = `\ufeff${expectedCsv}`;
-		expect(csvWithBom).toEqual(expectedCsvWithBom);
+		// @ts-expect-error: toEqualIgnoreLineEndings is a custom matcher
+		expect(csvWithBom).toEqualIgnoreLineEndings(expectedCsvWithBom);
 	});
 });

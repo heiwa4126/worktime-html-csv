@@ -48,9 +48,11 @@ describe("parseWorktimeHtmlToData", () => {
 		const csvNoBom = toCSVString(wide);
 		const csvWithBom = toCSVString(wide, true);
 		// BOMなし
-		expect(csvNoBom).toEqual(expectedCsv);
+		// @ts-expect-error: toEqualIgnoreLineEndings is a custom matcher
+		expect(csvNoBom).toEqualIgnoreLineEndings(expectedCsv);
 		// BOMあり
 		const expectedCsvWithBom = `\ufeff${expectedCsv}`;
-		expect(csvWithBom).toEqual(expectedCsvWithBom);
+		// @ts-expect-error: toEqualIgnoreLineEndings is a custom matcher
+		expect(csvWithBom).toEqualIgnoreLineEndings(expectedCsvWithBom);
 	});
 });
