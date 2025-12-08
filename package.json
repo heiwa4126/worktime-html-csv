@@ -1,6 +1,6 @@
 {
 	"name": "@heiwa4126/worktime-html-csv",
-	"version": "0.1.0-rc.3",
+	"version": "0.1.0",
 	"description": "Parse worktime HTML tables and convert them to pivot-style CSV. Dual ESM/CJS output, TypeScript types, and CLI tool. Supports Node.js (linkedom) and browser (native DOM).",
 	"type": "module",
 	"main": "./dist/parse.cjs",
