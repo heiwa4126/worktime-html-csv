@@ -236,3 +236,4 @@ tmp/*
 *.tmp
 tmp
 *.spdx.json
+.qlty/*
