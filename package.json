@@ -19,8 +19,7 @@
 		},
 		"./browser": {
 			"types": "./dist/parse.browser.d.ts",
-			"import": "./dist/parse.browser.js",
-			"require": "./dist/parse.browser.cjs"
+			"import": "./dist/parse.browser.js"
 		}
 	},
 	"files": [
