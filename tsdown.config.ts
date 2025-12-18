@@ -48,7 +48,7 @@ export default defineConfig([
 		outExtensions: fixCjsExtension,
 	},
 	// DOM版(DOMを直接読みに行く)
-	// ブラウザ版でのみ動作する。IIFE形式(globalNameで指定)
+	// ブラウザ版でのみ動作する「クラシックスクリプト」。IIFE形式(globalNameで指定)
 	// バンドルあり、外部パッケージもバンドル。minifyもする
 	// マップファイルなし、型定義なし
 	{

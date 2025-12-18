@@ -11,8 +11,10 @@
 
 ## 仕様
 
-- **Node.js バージョン**: [linkedom](https://www.npmjs.com/package/linkedom) を使って高速に処理
-- **ブラウザ バージョン**: ネイティブ DOM API を使用。また Node とブラウザの両方で動作するように CSV ライブラリは [papaparse](https://www.npmjs.com/package/papaparse) を使用
+Node とブラウザの両方で動作するように、CSV ライブラリは [papaparse](https://www.npmjs.com/package/papaparse) を使用
+
+- **Node.js バージョン**: DOM アクセスは[linkedom](https://www.npmjs.com/package/linkedom) を使って高速処理
+- **DOM バージョン**: ネイティブ DOM API を使用
 - **IIFE バンドル**: ブラウザ上では ESM スクリプトだけでなく、クラシックスクリプト版のビルドも添付(バンドル済み)
 - **CLI ツール**: HTML ファイルから CSV に変換するコマンドラインツール付き
 - **デュアルフォーマット**: ライブラリとして使う場合は ESM, TS(.d.ts), CommonJS をサポート
