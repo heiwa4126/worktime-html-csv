@@ -6,40 +6,51 @@ function fixCjsExtension({ format }: { format: string }) {
 }
 
 export default defineConfig([
+	// Node.js 用ライブラリ. ESM/CJS 両対応
+	// バンドルなし、外部パッケージのバンドルなし
+	// マップファイルあり(誰かがデバッグしてくれるかも)、型定義あり
 	{
+		clean: true,
 		entry: ["src/**/*.ts", "!src/cli.ts", "!src/**/*.browser.ts", "!src/**/*.test.ts"],
 		format: ["esm", "cjs"],
 		outDir: "dist",
 		unbundle: true,
 		sourcemap: true,
-		clean: true,
 		dts: true,
 		outExtensions: fixCjsExtension,
 	},
-	// CLI
+	// Node.js 用CLI. ESMのみ
+	// バンドルなし、外部パッケージのバンドルなし
+	// ライブラリとしては使わないのでマップファイルなし、型定義なし、minifyあり
 	{
+		clean: false,
 		entry: ["src/cli.ts"],
 		format: ["esm"],
 		outDir: "dist",
 		unbundle: true,
 		sourcemap: false,
-		clean: false,
-		dts: false,
-		outExtensions: fixCjsExtension,
-	},
-	// ブラウザ版ESM (依存あり)
-	{
-		entry: ["src/parse.browser.ts"],
-		format: ["esm"],
-		outDir: "dist",
-		unbundle: false,
-		sourcemap: false,
-		clean: false,
 		dts: false,
 		minify: true,
 		outExtensions: fixCjsExtension,
 	},
-	// ブラウザ版IIFEバンドル (依存関係なし)
+	// DOM版ライブラリ(DOMを直接読みに行く)
+	// Node.jsではESM/CJS両対応。ブラウザではESMのみ使える
+	// バンドルあり、外部パッケージのバンドルなし
+	// マップファイルあり(誰かがデバッグしてくれるかも)、型定義あり
+	{
+		clean: false,
+		entry: ["src/parse.browser.ts"],
+		format: ["esm", "cjs"],
+		outDir: "dist",
+		unbundle: false,
+		sourcemap: true,
+		dts: true,
+		outExtensions: fixCjsExtension,
+	},
+	// DOM版(DOMを直接読みに行く)
+	// ブラウザ版でのみ動作する。IIFE形式(globalNameで指定)
+	// バンドルあり、外部パッケージもバンドル。minifyもする
+	// マップファイルなし、型定義なし
 	{
 		entry: ["src/parse.browser.ts"],
 		format: ["iife"],
