@@ -47,7 +47,7 @@ console.log(toCSVString(wideArray));
 
 #### CommonJS (CJS)
 
-[examples/ex2.cjs](examples/ex2.cjs)
+[examples/ex1.cjs](examples/ex1.cjs)
 
 ```javascript
 const { parseWorktimeHtmlToData, toWideArray, toCSVString } = require("@heiwa4126/worktime-html-csv");
