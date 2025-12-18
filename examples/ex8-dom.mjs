@@ -3,8 +3,7 @@
 
 import { Window } from "happy-dom";
 import { readFileSync } from "node:fs";
-import {parseWorktimeHtmlToData, toWideArray} from "../dist/parse.browser.js";
-
+import { parseWorktimeHtmlToData, toWideArray } from "../dist/parse.browser.js";
 
 // happy-domでDOM環境を作成
 const window = new Window();
