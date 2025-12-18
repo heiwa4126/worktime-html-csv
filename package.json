@@ -19,7 +19,8 @@
 		},
 		"./browser": {
 			"types": "./dist/parse.browser.d.ts",
-			"import": "./dist/parse.browser.js"
+			"import": "./dist/parse.browser.js",
+			"require": "./dist/parse.browser.cjs"
 		}
 	},
 	"files": [
@@ -42,13 +43,13 @@
 		"lint": "biome lint .",
 		"format": "biome format --write .",
 		"format:all": "pnpm pkg fix && biome format --write . && dprint fmt && textlint --fix \"**/*.md\"",
-		"smoke-test:node": "node examples/ex1.mjs && node examples/ex2.cjs && tsx examples/ex3.ts && node examples/ex7-browser-smoke.mjs",
+		"smoke-test:node": "node examples/ex1.mjs && node examples/ex1.cjs && tsx examples/ex1.ts",
 		"smoke-test:cli": "node dist/cli.js --version",
-		"smoke-test:browser": "node examples/ex7-browser-smoke.mjs",
-		"smoke-test": "run-p smoke-test:node smoke-test:cli smoke-test:browser",
+		"smoke-test:dom": "node examples/ex8-dom.mjs && node examples/ex8-dom.cjs",
+		"smoke-test": "run-p smoke-test:*",
 		"prepack": "clean-publish-scripts -c",
 		"postpack": "clean-publish-scripts -r",
-		"version:prerelase": "npm version prerelease --preid=rc",
+		"version:prepatch": "npm version prepatch --preid=rc",
 		"version:patch": "npm version patch",
 		"start": "serve .",
 		"trivy": "trivy config . && trivy fs --exit-code 1 --severity HIGH,CRITICAL .",

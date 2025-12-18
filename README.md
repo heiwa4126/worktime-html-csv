@@ -167,12 +167,10 @@ pnpm run prepublishOnly
 
 3. ブラウザでテストページを開く:
 
-   - ESM 版: http://localhost:3000/examples/ex4-browser-esm.html (見た目がつまらない)
-   - ESM 版 2: http://localhost:3000/examples/ex4-browser-esm2.html (クリップボードにコピーされる)
-   - クラッシック版: http://localhost:3000/examples/ex5-browser-iife.html (見た目がつまらない)
-   - クラッシック版 2: http://localhost:3000/examples/ex5-browser-iife2.html (クリップボードにコピーされる)
-
-4. ブラウザのコンソール(F12)で結果を確認
+   - ESM 版: http://localhost:3000/examples/local_http/esm.html - 見た目がつまらない.ブラウザのコンソール(F12)で結果を確認
+   - ESM 版 2: http://localhost:3000/examples/local_http/esm2.html - ボタンを押すとクリップボードにコピーされる
+   - クラッシック版: http://localhost:3000/examples/local_http/classic.html - 見た目がつまらない.ブラウザのコンソール(F12)で結果を確認
+   - クラッシック版 2: http://localhost:3000/examples/local_http/classic2.html - ボタンを押すとクリップボードにコピーされる
 
 ## ライセンス
 

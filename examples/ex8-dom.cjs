@@ -3,14 +3,13 @@
 // This can be run in Node.js environment with DOM polyfill
 
 // ブラウザ版ライブラリをインポート
-// const { parseWorktimeHtmlToData, toWideArray } = await import("../dist/parse.browser.js");
-import {
+const {
 	parseWorktimeHtmlToData,
-	toCSVString,
 	toWideArray,
-} from "@heiwa4126/worktime-html-csv/browser";
-import { Window } from "happy-dom";
-import { readFileSync } from "node:fs";
+	toCSVString,
+} = require("@heiwa4126/worktime-html-csv/browser");
+const { readFileSync } = require("node:fs");
+const { Window } = require("happy-dom");
 
 // happy-domでDOM環境を作成
 const window = new Window();

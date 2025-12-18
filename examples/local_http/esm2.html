@@ -3,13 +3,18 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Browser IIFE Test 2 - worktime-html-csv</title>
-		<!-- IIFE版のブラウザライブラリをロード -->
-		<script src="../dist/parse.browser.global.js"></script>
+		<title>Browser ESM Test 2 - worktime-html-csv</title>
+		<script type="importmap">
+		{
+			"imports": {
+				"papaparse": "https://esm.sh/papaparse@5"
+			}
+		}
+		</script>
 		<link rel="stylesheet" href="ex.css" />
 	</head>
 	<body>
-		<h1>Browser IIFE Test 2</h1>
+		<h1>Browser ESM Test 2</h1>
 
 		<button onclick="test()">table to CSV</button>
 		<pre id="csv">(CSV empty)</pre>
@@ -717,13 +722,13 @@
 				</tbody>
 			</table>
 		</form>
-		<script>
-		const { parseWorktimeDomToData, toWideArray, toCSVString  } = WorktimeHtmlCsv;
+		<script type="module">
+		// ESM版のブラウザライブラリをテスト
+import { parseWorktimeDomToData, toWideArray, toCSVString } from '../../dist/parse.browser.js';
 
 function test() {
 	try {
-		console.log('Testing Browser IIFE version...');
-		console.log('Global WorktimeHtmlCsv:', WorktimeHtmlCsv);
+		console.log('Testing Browser ESM version...');
 
 		// HTMLをパース
 		const rows = parseWorktimeDomToData(document);
@@ -762,12 +767,13 @@ function test() {
 				console.error('❌ Failed to copy to clipboard:', err);
 			});
 
-		console.log('✅ Browser IIFE test completed successfully!');
+		console.log('✅ Browser ESM test completed successfully!');
 
 	} catch (error) {
 		console.error('❌ Test failed:', error);
 	}
 }
+window.test = test;
 		</script>
 	</body>
 </html>

@@ -11,7 +11,7 @@ export default defineConfig([
 	// マップファイルあり(誰かがデバッグしてくれるかも)、型定義あり
 	{
 		clean: true,
-		entry: ["src/**/*.ts", "!src/cli.ts", "!src/**/*.browser.ts", "!src/**/*.test.ts"],
+		entry: ["src/parse.ts"],
 		format: ["esm", "cjs"],
 		outDir: "dist",
 		unbundle: true,
