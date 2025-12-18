@@ -169,8 +169,17 @@ pnpm run prepublishOnly
 
    - ESM 版: http://localhost:3000/examples/local_http/esm.html - 見た目がつまらない.ブラウザのコンソール(F12)で結果を確認
    - ESM 版 2: http://localhost:3000/examples/local_http/esm2.html - ボタンを押すとクリップボードにコピーされる
-   - クラッシック版: http://localhost:3000/examples/local_http/classic.html - 見た目がつまらない.ブラウザのコンソール(F12)で結果を確認
-   - クラッシック版 2: http://localhost:3000/examples/local_http/classic2.html - ボタンを押すとクリップボードにコピーされる
+   - クラシック版: http://localhost:3000/examples/local_http/classic.html - 見た目がつまらない.ブラウザのコンソール(F12)で結果を確認
+   - クラシック版 2: http://localhost:3000/examples/local_http/classic2.html - ボタンを押すとクリップボードにコピーされる
+
+## CDN 版のテスト
+
+npmjs 経由で各 CDN に出まわったら
+
+- [esm.sh で ESM 版のテスト](examples/cdn/esmsh-esm.html)
+- [jsDelivr で classic 版のテスト](examples/cdn/jsdelivr-classic.html)
+
+でテストできます。サーバ不要。HTML をそのままブラウザで開けば OK
 
 ## ライセンス
 
