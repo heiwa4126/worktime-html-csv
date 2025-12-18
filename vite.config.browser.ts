@@ -7,5 +7,8 @@ export default defineConfig({
 		globals: true,
 		environment: "happy-dom",
 		include: ["test/**/*.browser.test.ts"],
+		coverage: {
+			exclude: ["test/testUtils.ts"],
+		},
 	},
 });

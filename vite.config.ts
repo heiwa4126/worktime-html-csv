@@ -8,5 +8,8 @@ export default defineConfig({
 		environment: "node",
 		include: ["test/**/*.test.ts"],
 		exclude: ["test/**/*.browser.test.ts"],
+		coverage: {
+			exclude: ["test/testUtils.ts"],
+		},
 	},
 });
