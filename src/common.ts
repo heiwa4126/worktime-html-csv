@@ -28,6 +28,11 @@ export function getHeaders(row: Element): string[] {
 	);
 }
 
+/**
+ * ヘッダー配列から特定のカラム名に対応するインデックスを取得する
+ * @param headers - ヘッダー名の文字列配列
+ * @returns 各カラム(製造オーダ、工程、日付、製造オーダ名、工数詳細または工数)のインデックスを持つオブジェクト
+ */
 export function getHeaderIndexes(headers: string[]) {
 	return {
 		order: headers.findIndex((h) => h.includes("製造オーダ")),
@@ -41,6 +46,15 @@ export function getHeaderIndexes(headers: string[]) {
 	};
 }
 
+/**
+ * セルの配列とヘッダーインデックス、年、月、現在の日付から作業時間情報を抽出する
+ * @param cells - テーブルの各セル要素の配列
+ * @param indexes - ヘッダー名から取得したインデックスのオブジェクト
+ * @param year - 年(YYYY形式の文字列)
+ * @param month - 月(MM形式の文字列)
+ * @param currentDate - 現在の日付(YYYY-MM-DD形式の文字列)
+ * @returns 抽出された作業時間情報(WorktimeRow型)または抽出できない場合はnull
+ */
 export function extractWorktime(
 	cells: Element[],
 	indexes: ReturnType<typeof getHeaderIndexes>,

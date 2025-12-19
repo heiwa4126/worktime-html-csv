@@ -10,6 +10,8 @@ export default defineConfig({
 		exclude: ["test/**/*.browser.test.ts"],
 		coverage: {
 			exclude: ["test/testUtils.ts"],
+			reporter: ["lcov", "json", "text"],
+			reportsDirectory: "./coverage/node", // ← 出力先を指定
 		},
 	},
 });
