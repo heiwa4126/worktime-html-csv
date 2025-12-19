@@ -86,13 +86,13 @@ export function convertTimeToHour(timeStr: string): number {
 }
 
 /**
- * WorktimeRow[] を横持ちCSV形式の2次元配列（string|number）に変換する
+ * WorktimeRow[] を横持ちCSV形式の2次元配列(string|number)に変換する
  * @param rows WorktimeRow[]
  * @returns (string|number)[][]
  */
 export function toWideArray(rows: WorktimeRow[]): (string | number)[][] {
 	if (!rows.length) return [];
-	// 日付列: WorktimeRow[]に現れる最小日付～最大日付まで全て
+	// 日付列: WorktimeRow[]に現れる最小日付~最大日付まで全て
 	const dateList = rows.map((r) => r.date).sort();
 	const minDate = dateList[0];
 	const maxDate = dateList[dateList.length - 1];
@@ -159,7 +159,7 @@ export function toWideArray(rows: WorktimeRow[]): (string | number)[][] {
  *
  * @param outRows - CSV データを表す2次元配列。各内部配列は1行を表し、要素は文字列または数値。
  * @param withBom - 先頭に UTF-8 BOM (\ufeff) を付与するか。Excel 用。デフォルトは false。
- * @returns CSV形式の文字列（ヘッダーなし）
+ * @returns CSV形式の文字列(ヘッダーなし)
  *
  * @remarks
  * PapaParse の `unparse` メソッドを使用して配列をCSV形式に変換します。
@@ -169,7 +169,7 @@ export function toWideArray(rows: WorktimeRow[]): (string | number)[][] {
  * @example
  * ```ts
  * toCSVString(data, true) // BOM付きCSV
- * toCSVString(data) // BOMなしCSV（デフォルト）
+ * toCSVString(data) // BOMなしCSV(デフォルト)
  * ```
  */
 export function toCSVString(outRows: (string | number)[][], withBom = false): string {
