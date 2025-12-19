@@ -11,7 +11,7 @@ export interface WorktimeRow {
 }
 
 // 年月取得の共通関数
-export function getYearMonthGeneric(
+export function getYearMonth(
 	doc: Document,
 	getValue: (el: Element | null) => string,
 ): { year: string; month: string } {
@@ -21,13 +21,13 @@ export function getYearMonthGeneric(
 	};
 }
 // --- 共通ロジック: ヘッダ・インデックス・行データ抽出 ---
-export function getHeadersGeneric(row: Element): string[] {
+export function getHeaders(row: Element): string[] {
 	return Array.from((row as Element)?.querySelectorAll?.("th,td") || []).map(
 		(th) => (th as Element).textContent?.trim() || "",
 	);
 }
 
-export function getHeaderIndexesGeneric(headers: string[]) {
+export function getHeaderIndexes(headers: string[]) {
 	return {
 		order: headers.findIndex((h) => h.includes("製造オーダ")),
 		process: headers.findIndex((h) => h.includes("工程")),
@@ -40,9 +40,9 @@ export function getHeaderIndexesGeneric(headers: string[]) {
 	};
 }
 
-export function extractWorktimeRowGeneric(
+export function extractWorktime(
 	cells: Element[],
-	indexes: ReturnType<typeof getHeaderIndexesGeneric>,
+	indexes: ReturnType<typeof getHeaderIndexes>,
 	year: string,
 	month: string,
 	currentDate: string,

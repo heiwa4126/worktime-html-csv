@@ -1,12 +1,7 @@
 /// <reference lib="dom" />
 
 import type { WorktimeRow } from "./common.js";
-import {
-	extractWorktimeRowGeneric,
-	getHeaderIndexesGeneric,
-	getHeadersGeneric,
-	getYearMonthGeneric,
-} from "./common.js";
+import { extractWorktime, getHeaderIndexes, getHeaders, getYearMonth } from "./common.js";
 export { toCSVString, toWideArray } from "./common.js";
 export type { WorktimeRow } from "./common.js";
 
@@ -14,29 +9,29 @@ function getValueBrowser(el: Element | null): string {
 	return (el as HTMLInputElement | null)?.value || "";
 }
 
-function getTableRows(doc: Document): HTMLTableRowElement[] {
-	const table = doc.getElementById("Grid1ContainerTbl");
+function getTableRows(document: Document): HTMLTableRowElement[] {
+	const table = document.getElementById("Grid1ContainerTbl");
 	if (!table) return [];
 	return Array.from(table.querySelectorAll("tr"));
 }
 
 /**
  * 工数管理HTMLのDocumentから集計用データを抽出（共通ロジック）
- * @param doc HTML Document
+ * @param document HTML Document
  * @returns WorktimeRow[]
  */
-export function parseWorktimeDomToData(doc: Document): WorktimeRow[] {
-	const { year, month } = getYearMonthGeneric(doc, getValueBrowser);
-	const rows = getTableRows(doc);
+export function parseWorktimeDomToData(document: Document): WorktimeRow[] {
+	const { year, month } = getYearMonth(document, getValueBrowser);
+	const rows = getTableRows(document);
 	if (rows.length < 2 || !rows[0]) return [];
-	const headers = getHeadersGeneric(rows[0] as Element);
-	const indexes = getHeaderIndexesGeneric(headers);
+	const headers = getHeaders(rows[0] as Element);
+	const indexes = getHeaderIndexes(headers);
 	const result: WorktimeRow[] = [];
 	let currentDate = "";
 	for (let i = 1; i < rows.length; ++i) {
 		const cells = Array.from(rows[i]?.querySelectorAll("td") || []);
 		if (cells.length < headers.length) continue;
-		const row = extractWorktimeRowGeneric(cells, indexes, year, month, currentDate);
+		const row = extractWorktime(cells, indexes, year, month, currentDate);
 		if (!row) continue;
 		currentDate = row.date;
 		result.push(row);
