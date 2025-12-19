@@ -42,9 +42,6 @@ importers:
       npm-run-all:
         specifier: ^4.1.5
         version: 4.1.5
-      serve-static:
-        specifier: link:@hono/node-server/serve-static
-        version: link:@hono/node-server/serve-static
       tsdown:
         specifier: ^0.18.1
         version: 0.18.1(typescript@5.9.3)
