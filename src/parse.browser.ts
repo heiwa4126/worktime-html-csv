@@ -1,8 +1,13 @@
 /// <reference lib="dom" />
 
-import { convertTimeToHour } from "./common.js";
 import type { WorktimeRow } from "./common.js";
-export { toWideArray, toCSVString } from "./common.js";
+import {
+	extractWorktimeRowGeneric,
+	getHeaderIndexesGeneric,
+	getHeadersGeneric,
+	getYearMonthGeneric,
+} from "./common.js";
+export { toCSVString, toWideArray } from "./common.js";
 export type { WorktimeRow } from "./common.js";
 
 /**
@@ -10,46 +15,32 @@ export type { WorktimeRow } from "./common.js";
  * @param doc HTML Document
  * @returns WorktimeRow[]
  */
-export function parseWorktimeDomToData(doc: Document): WorktimeRow[] {
-	// 年月取得
-	const year = (doc.getElementById("vD_SYORI_Y4") as HTMLInputElement)?.value || "";
-	const month = (doc.getElementById("vD_SYORI_MM") as HTMLInputElement)?.value || "";
-	// テーブル取得
+
+function getValueBrowser(el: Element | null): string {
+	return (el as HTMLInputElement | null)?.value || "";
+}
+
+function getTableRows(doc: Document): HTMLTableRowElement[] {
 	const table = doc.getElementById("Grid1ContainerTbl");
 	if (!table) return [];
-	// ヘッダ行・データ行取得
-	const rows = Array.from(table.querySelectorAll("tr"));
-	if (rows.length < 2) return [];
-	const headers = Array.from(rows[0]?.querySelectorAll("th,td") || []).map(
-		(th) => th.textContent?.trim() || "",
-	);
-	const idx = (name: string) => headers.findIndex((h) => h.includes(name));
+	return Array.from(table.querySelectorAll("tr"));
+}
+
+export function parseWorktimeDomToData(doc: Document): WorktimeRow[] {
+	const { year, month } = getYearMonthGeneric(doc, getValueBrowser);
+	const rows = getTableRows(doc);
+	if (rows.length < 2 || !rows[0]) return [];
+	const headers = getHeadersGeneric(rows[0] as Element);
+	const indexes = getHeaderIndexesGeneric(headers);
 	const result: WorktimeRow[] = [];
-	let currentDate = ""; // 前回の日付を保持
+	let currentDate = "";
 	for (let i = 1; i < rows.length; ++i) {
 		const cells = Array.from(rows[i]?.querySelectorAll("td") || []);
 		if (cells.length < headers.length) continue;
-		// 日付変換
-		const dateRaw = cells[idx("日付")]?.textContent?.trim() || "";
-		if (dateRaw) {
-			// 日付セルに値がある場合、新しい日付として記録
-			const day = dateRaw.split("(")[0]?.padStart(2, "0") || "";
-			currentDate = `${year}-${month}-${day}`;
-		}
-		// 日付セルが空の場合は前回の日付を使用
-		if (!currentDate) continue; // 最初の日付が見つかるまでスキップ
-		const date = currentDate;
-		// 工数詳細→時間（ヘッダ名「工数詳細」または「工数」を許容）
-		const timeCol = idx("工数詳細") !== -1 ? idx("工数詳細") : idx("工数");
-		const timeStr = cells[timeCol]?.textContent?.trim() || "";
-		const hours = convertTimeToHour(timeStr);
-		result.push({
-			order: cells[idx("製造オーダ")]?.textContent?.trim() || "",
-			process: cells[idx("工程")]?.textContent?.trim() || "",
-			date,
-			hours,
-			orderName: cells[idx("製造オーダ名")]?.textContent?.trim() || "",
-		});
+		const row = extractWorktimeRowGeneric(cells, indexes, year, month, currentDate);
+		if (!row) continue;
+		currentDate = row.date;
+		result.push(row);
 	}
 	return result;
 }

@@ -1,3 +1,57 @@
+// 年月取得の共通関数
+export function getYearMonthGeneric(
+	doc: Document,
+	getValue: (el: Element | null) => string,
+): { year: string; month: string } {
+	return {
+		year: getValue(doc.getElementById("vD_SYORI_Y4")),
+		month: getValue(doc.getElementById("vD_SYORI_MM")),
+	};
+}
+// --- 共通ロジック: ヘッダ・インデックス・行データ抽出 ---
+export function getHeadersGeneric(row: Element): string[] {
+	return Array.from((row as Element)?.querySelectorAll?.("th,td") || []).map(
+		(th) => (th as Element).textContent?.trim() || "",
+	);
+}
+
+export function getHeaderIndexesGeneric(headers: string[]) {
+	return {
+		order: headers.findIndex((h) => h.includes("製造オーダ")),
+		process: headers.findIndex((h) => h.includes("工程")),
+		date: headers.findIndex((h) => h.includes("日付")),
+		orderName: headers.findIndex((h) => h.includes("製造オーダ名")),
+		time:
+			headers.findIndex((h) => h.includes("工数詳細")) !== -1
+				? headers.findIndex((h) => h.includes("工数詳細"))
+				: headers.findIndex((h) => h.includes("工数")),
+	};
+}
+
+export function extractWorktimeRowGeneric(
+	cells: Element[],
+	indexes: ReturnType<typeof getHeaderIndexesGeneric>,
+	year: string,
+	month: string,
+	currentDate: string,
+): WorktimeRow | null {
+	const dateRaw = cells[indexes.date]?.textContent?.trim() || "";
+	let date = currentDate;
+	if (dateRaw) {
+		const day = dateRaw.split("(")[0]?.padStart(2, "0") || "";
+		date = `${year}-${month}-${day}`;
+	}
+	if (!date) return null;
+	const timeStr = cells[indexes.time]?.textContent?.trim() || "";
+	const hours = convertTimeToHour(timeStr);
+	return {
+		order: cells[indexes.order]?.textContent?.trim() || "",
+		process: cells[indexes.process]?.textContent?.trim() || "",
+		date,
+		hours,
+		orderName: cells[indexes.orderName]?.textContent?.trim() || "",
+	};
+}
 // HTML工数集計の共通型定義とユーティリティ関数
 // Node.js版とブラウザ版で共通利用
 import Papa from "papaparse";
