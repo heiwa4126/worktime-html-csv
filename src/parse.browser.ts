@@ -3,7 +3,7 @@
 import type { WorktimeRow } from "./common.js";
 import { extractWorktime, getHeaderIndexes, getHeaders, getYearMonth } from "./common.js";
 export { toCSVString, toWideArray } from "./common.js";
-export type { WorktimeRow } from "./common.js";
+export type { WorktimeRow };
 
 function getValueDom(el: Element | null): string {
 	return (el as HTMLInputElement | null)?.value || "";

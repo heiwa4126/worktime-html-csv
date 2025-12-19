@@ -1,15 +1,7 @@
 import { type HTMLInputElement, parseHTML } from "linkedom";
-import {
-	extractWorktime,
-	getHeaderIndexes,
-	getHeaders,
-	getYearMonth,
-	toCSVString,
-	toWideArray,
-	type WorktimeRow,
-} from "./common.js";
-
-export { toCSVString, toWideArray };
+import type { WorktimeRow } from "./common.js";
+import { extractWorktime, getHeaderIndexes, getHeaders, getYearMonth } from "./common.js";
+export { toCSVString, toWideArray } from "./common.js";
 export type { WorktimeRow };
 
 function getValueNode(el: Element | null): string {
