@@ -1,3 +1,15 @@
+// HTML工数集計の共通型定義とユーティリティ関数
+// Node.js版とブラウザ版で共通利用
+import Papa from "papaparse";
+
+export interface WorktimeRow {
+	order: string;
+	process: string;
+	date: string; // yyyy-mm-dd
+	hours: number;
+	orderName: string;
+}
+
 // 年月取得の共通関数
 export function getYearMonthGeneric(
 	doc: Document,
@@ -51,17 +63,6 @@ export function extractWorktimeRowGeneric(
 		hours,
 		orderName: cells[indexes.orderName]?.textContent?.trim() || "",
 	};
-}
-// HTML工数集計の共通型定義とユーティリティ関数
-// Node.js版とブラウザ版で共通利用
-import Papa from "papaparse";
-
-export interface WorktimeRow {
-	order: string;
-	process: string;
-	date: string; // yyyy-mm-dd
-	hours: number;
-	orderName: string;
 }
 
 /**

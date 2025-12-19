@@ -10,12 +10,6 @@ import {
 export { toCSVString, toWideArray } from "./common.js";
 export type { WorktimeRow } from "./common.js";
 
-/**
- * 工数管理HTMLのDocumentから集計用データを抽出（共通ロジック）
- * @param doc HTML Document
- * @returns WorktimeRow[]
- */
-
 function getValueBrowser(el: Element | null): string {
 	return (el as HTMLInputElement | null)?.value || "";
 }
@@ -26,6 +20,11 @@ function getTableRows(doc: Document): HTMLTableRowElement[] {
 	return Array.from(table.querySelectorAll("tr"));
 }
 
+/**
+ * 工数管理HTMLのDocumentから集計用データを抽出（共通ロジック）
+ * @param doc HTML Document
+ * @returns WorktimeRow[]
+ */
 export function parseWorktimeDomToData(doc: Document): WorktimeRow[] {
 	const { year, month } = getYearMonthGeneric(doc, getValueBrowser);
 	const rows = getTableRows(doc);
