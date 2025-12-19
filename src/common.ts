@@ -20,6 +20,7 @@ export function getYearMonth(
 		month: getValue(doc.getElementById("vD_SYORI_MM")),
 	};
 }
+
 // --- 共通ロジック: ヘッダ・インデックス・行データ抽出 ---
 export function getHeaders(row: Element): string[] {
 	return Array.from((row as Element)?.querySelectorAll?.("th,td") || []).map(
@@ -86,37 +87,85 @@ export function convertTimeToHour(timeStr: string): number {
 }
 
 /**
- * WorktimeRow[] を横持ちCSV形式の2次元配列(string|number)に変換する
- * @param rows WorktimeRow[]
- * @returns (string|number)[][]
+ * 開始日から終了日までの日付配列を生成する
+ *
+ * @param start - 開始日 (yyyy-mm-dd形式)
+ * @param end - 終了日 (yyyy-mm-dd形式)
+ * @returns 開始日から終了日までの連続した日付文字列の配列 (yyyy-mm-dd形式)
+ *
+ * @example
+ * ```ts
+ * getDateArray("2024-01-01", "2024-01-03")
+ * // => ["2024-01-01", "2024-01-02", "2024-01-03"]
+ * ```
  */
-export function toWideArray(rows: WorktimeRow[]): (string | number)[][] {
-	if (!rows.length) return [];
-	// 日付列: WorktimeRow[]に現れる最小日付~最大日付まで全て
-	const dateList = rows.map((r) => r.date).sort();
-	const minDate = dateList[0];
-	const maxDate = dateList[dateList.length - 1];
-	if (!minDate || !maxDate) return [];
-	function getDateArray(start: string, end: string): string[] {
-		const arr: string[] = [];
-		// biome-ignore lint/style/useConst: d is mutated via setDate
-		let d = new Date(start);
-		const endD = new Date(end);
-		while (d <= endD) {
-			const y = d.getFullYear();
-			const m = String(d.getMonth() + 1).padStart(2, "0");
-			const day = String(d.getDate()).padStart(2, "0");
-			arr.push(`${y}-${m}-${day}`);
-			d.setDate(d.getDate() + 1);
-		}
-		return arr;
+export function getDateArray(start: string, end: string): string[] {
+	const arr: string[] = [];
+	// biome-ignore lint/style/useConst: d is mutated via setDate
+	let d = new Date(start);
+	const endD = new Date(end);
+	while (d <= endD) {
+		const y = d.getFullYear();
+		const m = String(d.getMonth() + 1).padStart(2, "0");
+		const day = String(d.getDate()).padStart(2, "0");
+		arr.push(`${y}-${m}-${day}`);
+		d.setDate(d.getDate() + 1);
 	}
-	const dates = getDateArray(minDate, maxDate);
-	// ヘッダー: 製造オーダ, 工程, ...日付...
-	const headers = ["製造オーダ", "工程", ...dates];
-	// 製造オーダ・工程ごとにグループ化
-	type Group = { order: string; process: string; [date: string]: string | number };
-	const groupMap = new Map<string, Group>();
+	return arr;
+}
+
+/**
+ * 時間値を文字列にフォーマットする
+ *
+ * 小数点以下が .0 または .5 の場合は1桁で表示し、それ以外は2桁で表示します。
+ *
+ * @param val - フォーマットする時間値
+ * @returns フォーマットされた時間文字列
+ *
+ * @example
+ * ```ts
+ * formatHour(2.0)  // => "2.0"
+ * formatHour(2.5)  // => "2.5"
+ * formatHour(2.33) // => "2.33"
+ * ```
+ */
+export function formatHour(val: number): string {
+	// 小数点以下が .0 または .5 なら1桁、それ以外は2桁
+	if (Number.isInteger(val * 2)) {
+		return val.toFixed(1);
+	}
+	return val.toFixed(2);
+}
+
+/**
+ * グループ化されたデータの型定義
+ */
+type WorktimeGroup = {
+	order: string;
+	process: string;
+	[date: string]: string | number;
+};
+
+/**
+ * WorktimeRowの配列を製造オーダと工程でグループ化する
+ *
+ * 同じ製造オーダと工程の組み合わせについて、日付ごとの工数をマップに集約します。
+ *
+ * @param rows - グループ化するWorktimeRowの配列
+ * @returns 製造オーダと工程をキーとしたグループのMap
+ *
+ * @example
+ * ```ts
+ * const rows = [
+ *   { order: "A", process: "P1", date: "2024-01-01", hours: 2.0, orderName: "" },
+ *   { order: "A", process: "P1", date: "2024-01-02", hours: 3.0, orderName: "" },
+ * ];
+ * const groups = groupByOrderAndProcess(rows);
+ * // Map { "A\tP1" => { order: "A", process: "P1", "2024-01-01": 2.0, "2024-01-02": 3.0 } }
+ * ```
+ */
+export function groupByOrderAndProcess(rows: WorktimeRow[]): Map<string, WorktimeGroup> {
+	const groupMap = new Map<string, WorktimeGroup>();
 	for (const row of rows) {
 		const key = `${row.order}\t${row.process}`;
 		let group = groupMap.get(key);
@@ -126,16 +175,35 @@ export function toWideArray(rows: WorktimeRow[]): (string | number)[][] {
 		}
 		group[row.date] = row.hours;
 	}
-	// データ行生成
-	function formatHour(val: number): string {
-		// 小数点以下が .0 または .5 なら1桁、それ以外は2桁
-		if (Number.isInteger(val * 2)) {
-			return val.toFixed(1);
-		}
-		return val.toFixed(2);
-	}
+	return groupMap;
+}
+
+/**
+ * グループ化されたデータをフォーマットして2次元配列に変換する
+ *
+ * 各グループについて、製造オーダ、工程、および各日付の工数をフォーマットして配列化します。
+ * 日付に対応する工数が存在しない場合は "0.0" で埋めます。
+ *
+ * @param groupMap - グループ化されたデータのMap
+ * @param dates - 出力する日付の配列 (yyyy-mm-dd形式)
+ * @returns フォーマットされたデータ行の2次元配列
+ *
+ * @example
+ * ```ts
+ * const groups = new Map([
+ *   ["A\tP1", { order: "A", process: "P1", "2024-01-01": 2.0 }]
+ * ]);
+ * const dates = ["2024-01-01", "2024-01-02"];
+ * const data = formatDataRows(groups, dates);
+ * // [["A", "P1", "2.0", "0.0"]]
+ * ```
+ */
+export function formatDataRows(
+	groupMap: Map<string, WorktimeGroup>,
+	dates: string[],
+): (string | number)[][] {
 	const data: (string | number)[][] = [];
-	// 工程順にソート
+	// 製造オーダと工程でソート
 	const sortedGroups = Array.from(groupMap.values()).sort(
 		(a, b) => a.order.localeCompare(b.order) || a.process.localeCompare(b.process),
 	);
@@ -151,6 +219,54 @@ export function toWideArray(rows: WorktimeRow[]): (string | number)[][] {
 		}
 		data.push(arr);
 	}
+	return data;
+}
+
+/**
+ * WorktimeRow[] を横持ちCSV形式の2次元配列(string|number)に変換する
+ *
+ * 入力されたWorktimeRowの配列を、日付を列とした横持ち形式の2次元配列に変換します。
+ * ヘッダー行には「製造オーダ」「工程」と日付範囲が含まれ、データ行には各製造オーダ・工程
+ * ごとの日付別工数が含まれます。日付範囲は入力データの最小日付から最大日付までを自動的に
+ * 生成します。
+ *
+ * @param rows - 変換するWorktimeRowの配列
+ * @returns ヘッダー行とデータ行を含む2次元配列。データが空の場合は空配列を返します。
+ *
+ * @example
+ * ```ts
+ * const rows = [
+ *   { order: "A", process: "P1", date: "2024-01-01", hours: 2.0, orderName: "" },
+ *   { order: "A", process: "P1", date: "2024-01-02", hours: 3.0, orderName: "" },
+ * ];
+ * const result = toWideArray(rows);
+ * // [
+ * //   ["製造オーダ", "工程", "2024-01-01", "2024-01-02"],
+ * //   ["A", "P1", "2.0", "3.0"]
+ * // ]
+ * ```
+ */
+export function toWideArray(rows: WorktimeRow[]): (string | number)[][] {
+	if (!rows.length) return [];
+
+	// 日付範囲を取得
+	const dateList = rows.map((r) => r.date).sort();
+	const minDate = dateList[0];
+	const maxDate = dateList[dateList.length - 1];
+	if (!minDate || !maxDate) return [];
+
+	// 日付配列を生成
+	const dates = getDateArray(minDate, maxDate);
+
+	// ヘッダー行を生成
+	const headers = ["製造オーダ", "工程", ...dates];
+
+	// データをグループ化
+	const groupMap = groupByOrderAndProcess(rows);
+
+	// データ行をフォーマット
+	const data = formatDataRows(groupMap, dates);
+
 	return [headers, ...data];
 }
 
