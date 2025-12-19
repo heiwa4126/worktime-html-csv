@@ -101,7 +101,10 @@ ESM スクリプト版:
 </script>
 ```
 
-詳しくは `examples/*.html` を参照
+詳しくは `examples/local_http/*.html` を参照。
+
+CDN に展開されていたら CDN も使えます。
+`examples/cdn/*.html` を参照。
 
 ### CLI ツールとして利用
 

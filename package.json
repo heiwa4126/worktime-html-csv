@@ -50,7 +50,7 @@
 		"smoke-test": "run-p smoke-test:*",
 		"prepack": "clean-publish-scripts -c",
 		"postpack": "clean-publish-scripts -r",
-		"version": "pnpm pkg get version",
+		"ver": "pnpm pkg get version",
 		"start": "serve .",
 		"trivy": "trivy config . && trivy fs --exit-code 1 --severity HIGH,CRITICAL .",
 		"sbom": "trivy fs --scanners vuln --format spdx-json --output sbom.spdx.json .",
