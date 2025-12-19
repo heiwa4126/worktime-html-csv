@@ -132,11 +132,8 @@ pnpm install
 # ビルド
 pnpm run build
 
-# テスト(Node.js版)
+# テスト(Node.js版+ブラウザ版をnodeで)
 pnpm test
-
-# テスト(ブラウザ版)
-pnpm run test:browser
 
 # Lint
 pnpm run lint
@@ -148,32 +145,22 @@ pnpm run format
 pnpm run prepublishOnly
 ```
 
-## ビルド成果物
-
-本プロジェクトは複数のフォーマットでビルドされます:
-
-- `dist/parse.js` - Node.js ESM 版(linkedom 使用)
-- `dist/parse.cjs` - Node.js CommonJS 版(linkedom 使用)
-- `dist/parse.d.ts` - TypeScript 型定義
-- `dist/parse.browser.js` - ブラウザ用 ESM 版(ネイティブ DOM 使用)
-- `dist/parse.browser.cjs` - ブラウザ用 CommonJS 版(ネイティブ DOM 使用)
-- `dist/parse.browser.global.js` - IIFE バンドル(バンドル&minify 済み)
-- `dist/cli.js` - CLI ツール
-
 ## ブラウザ版のテスト
 
 1. ビルド:
    `pnpm run build`
 
-2. 簡易 HTTP サーバーを起動:
+2. Hono で書いたテスト用 HTTP サーバーを起動:
    `pnpm start`
 
 3. ブラウザでテストページを開く:
 
-   - ESM 版: http://localhost:3000/examples/local_http/esm.html - 見た目がつまらない.ブラウザのコンソール(F12)で結果を確認
-   - ESM 版 2: http://localhost:3000/examples/local_http/esm2.html - ボタンを押すとクリップボードにコピーされる
-   - クラシック版: http://localhost:3000/examples/local_http/classic.html - 見た目がつまらない.ブラウザのコンソール(F12)で結果を確認
-   - クラシック版 2: http://localhost:3000/examples/local_http/classic2.html - ボタンを押すとクリップボードにコピーされる
+   <http://localhost:3000/> をブラウザで開くと、以下が表示されます
+
+   - classic.html - 見た目がつまらない.ブラウザのコンソール(F12)で結果を確認
+   - classic2.html - ボタンを押すと画面更新&クリップボードにコピーされる
+   - esm.html - 見た目がつまらない.ブラウザのコンソール(F12)で結果を確認
+   - esm2.html - ボタンを押すと画面更新&クリップボードにコピーされる
 
 ## CDN 版のテスト
 
