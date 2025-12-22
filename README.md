@@ -166,8 +166,8 @@ pnpm run prepublishOnly
 
 npmjs 経由で各 CDN に出まわったら
 
-- [esm.sh で ESM 版のテスト](examples/cdn/esmsh-esm.html)
-- [jsDelivr で classic 版のテスト](examples/cdn/jsdelivr-classic.html)
+- [esm.sh で ESM 版のテスト](examples/local_http/CDN-esmsh-esm.html)
+- [jsDelivr で classic 版のテスト](examples/local_http/CDN-jsdelivr-classic.html)
 
 でテストできます。サーバ不要。HTML をそのままブラウザで開けば OK
 
