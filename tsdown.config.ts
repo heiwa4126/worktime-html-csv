@@ -1,9 +1,18 @@
 import { defineConfig } from "tsdown";
+import pkg from "./package.json" with { type: "json" };
 
 function fixCjsExtension({ format }: { format: string }) {
 	if (format === "cjs") return { js: ".cjs" };
 	return { js: ".js" };
 }
+
+// Generate license banner from package.json
+const banner = `/* @license
+${pkg.name}
+v${pkg.version}
+${pkg.homepage}
+License: ${pkg.license}
+*/`;
 
 export default defineConfig([
 	// Node.js 用ライブラリ. ESM/CJS 両対応
@@ -18,6 +27,9 @@ export default defineConfig([
 		sourcemap: true,
 		dts: true,
 		outExtensions: fixCjsExtension,
+		outputOptions: {
+			banner,
+		},
 	},
 	// Node.js 用CLI. ESMのみ
 	// バンドルなし、外部パッケージのバンドルなし
@@ -46,6 +58,9 @@ export default defineConfig([
 		sourcemap: true,
 		dts: true,
 		outExtensions: fixCjsExtension,
+		outputOptions: {
+			banner,
+		},
 	},
 	// DOM版(DOMを直接読みに行く)
 	// ブラウザ版でのみ動作する「クラシックスクリプト」。IIFE形式(globalNameで指定)
@@ -65,6 +80,7 @@ export default defineConfig([
 			// outExtensionsでは対応できない。hello.iife.global.js になる
 			// [name] はエントリファイル名 (hello) に置き換わります
 			entryFileNames: "[name].global.js",
+			banner,
 		},
 	},
 ]);
