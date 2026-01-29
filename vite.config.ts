@@ -6,10 +6,10 @@ export default defineConfig({
 		globals: true,
 		// Node.js版テスト用（デフォルト）
 		environment: "node",
-		include: ["test/**/*.test.ts"],
-		exclude: ["test/**/*.browser.test.ts"],
+		include: ["tests/**/*.test.ts"],
+		exclude: ["tests/**/*.browser.test.ts"],
 		coverage: {
-			exclude: ["test/testUtils.ts"],
+			exclude: ["tests/testUtils.ts"],
 			reporter: ["lcov", "json", "text"],
 			reportsDirectory: "./coverage/node", // ← 出力先を指定
 		},

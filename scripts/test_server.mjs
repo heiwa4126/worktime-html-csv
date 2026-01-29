@@ -37,38 +37,13 @@ app.get("/", (c) => {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Test Server - HTML Files</title>
 	<style>
-		body {
-			font-family: system-ui, -apple-system, sans-serif;
-			max-width: 800px;
-			margin: 2rem auto;
-			padding: 0 1rem;
-			line-height: 1.6;
-		}
-		h1 {
-			color: #333;
-			border-bottom: 2px solid #0066cc;
-			padding-bottom: 0.5rem;
-		}
-		ul {
-			list-style: none;
-			padding: 0;
-		}
-		li {
-			margin: 0.5rem 0;
-		}
-		a {
-			color: #0066cc;
-			text-decoration: none;
-			font-size: 1.1rem;
-		}
-		a:hover {
-			text-decoration: underline;
-		}
-		.count {
-			color: #666;
-			font-size: 0.9rem;
-			margin-top: 1rem;
-		}
+	body{font-family:system-ui,-apple-system,sans-serif;max-width:800px;margin:2rem auto;padding:0 1rem;line-height:1.6}
+	h1{color:#333;border-bottom:2px solid #0066cc;padding-bottom:.5rem}
+	ul{list-style:none;padding:0}
+	li{margin:.5rem 0}
+	a{color:#0066cc;text-decoration:none;font-size:1.1rem}
+	a:hover{text-decoration:underline}
+	.count{color:#666;font-size:.9rem;margin-top:1rem}
 	</style>
 </head>
 <body>

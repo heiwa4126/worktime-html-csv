@@ -166,10 +166,34 @@ pnpm run prepublishOnly
 
 npmjs 経由で各 CDN に出まわったら
 
-- [esm.sh で ESM 版のテスト](examples/cdn/esmsh-esm.html)
-- [jsDelivr で classic 版のテスト](examples/cdn/jsdelivr-classic.html)
+- [esm.sh で ESM 版のテスト](examples/local_http/CDN-esmsh-esm.html)
+- [jsDelivr で classic 版のテスト](examples/local_http/CDN-jsdelivr-classic.html)
 
 でテストできます。サーバ不要。HTML をそのままブラウザで開けば OK
+
+### CDN の ESM 版の importmap
+
+最近は CDN が package.json の dependency をチェックして
+
+```html
+<script type="importmap">
+  {
+    "imports": {
+      "papaparse": "https://esm.sh/papaparse@5"
+    }
+  }
+</script>
+```
+
+相当の記述を自動で追加している場合があります。ありがたいことだ。
+
+確認はたとえば esm.sh だったら
+<https://esm.sh/@heiwa4126/worktime-html-csv/browser>
+をみてください。
+
+(2025-12)
+esm.sh は正しい importmap がついてますが、
+jsDeliver はいらん importmap がついてる...
 
 ## ライセンス
 
