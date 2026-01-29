@@ -75,6 +75,7 @@ export default defineConfig([
 		dts: false,
 		globalName: "WorktimeHtmlCsv",
 		minify: true,
+		inlineOnly: false, //「依存関係を意図的にバンドルしている」ことを伝えるオプション
 		noExternal: ["papaparse"],
 		outputOptions: {
 			// outExtensionsでは対応できない。hello.iife.global.js になる
