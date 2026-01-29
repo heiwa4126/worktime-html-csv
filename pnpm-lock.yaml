@@ -22,8 +22,8 @@ importers:
         specifier: ^0.0.4
         version: 0.0.4
       '@hono/node-server':
-        specifier: ^1.19.7
-        version: 1.19.7(hono@4.11.7)
+        specifier: ^1.19.9
+        version: 1.19.9(hono@4.11.7)
       '@types/node':
         specifier: ^25.0.10
         version: 25.0.10
@@ -37,11 +37,11 @@ importers:
         specifier: ^20.4.0
         version: 20.4.0
       hono:
-        specifier: ^4.11.1
+        specifier: ^4.11.7
         version: 4.11.7
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
+      npm-run-all2:
+        specifier: ^8.0.4
+        version: 8.0.4
       tsdown:
         specifier: ^0.20.1
         version: 0.20.1(typescript@5.9.3)
@@ -768,25 +768,6 @@ packages:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
 
-  has-property-descriptors@1.0.2:
-    resolution: {integrity: sha512-55JNKuIW+vq4Ke1BjOTjM2YctQIvCT7GFzHwmfZPGo5wnrgkid0YQtnAleFSqumZm4az3n2BS+erby5ipJdgrg==}
-
-  has-proto@1.2.0:
-    resolution: {integrity: sha512-KIL7eQPfHQRC8+XluaIw7BHUwwqL19bQn4hzNgdr+1wXoU0KKj6rufu47lhY7KbJR2C6T6+PfyN0Ea7wkSS+qQ==}
-    engines: {node: '>= 0.4'}
-
-  has-symbols@1.1.0:
-    resolution: {integrity: sha512-1cDNdwJ2Jaohmb3sg4OmKaMBwuC48sYni5HUw2DvsC8LjGTLK9h+eb1X6RyuOHe4hT0ULCW68iomhjUoKUqlPQ==}
-    engines: {node: '>= 0.4'}
-
-  has-tostringtag@1.0.2:
-    resolution: {integrity: sha512-NqADB8VjPFLM2V0VvHUewwwsw0ZWBaIdgo+ieHtK3hasLz4qeCRjYcqfB6AQrBggRKppKF8L52/VqdVsO47Dlw==}
-    engines: {node: '>= 0.4'}
-
-  hasown@2.0.2:
-    resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
-    engines: {node: '>= 0.4'}
-
   hono@4.11.7:
     resolution: {integrity: sha512-l7qMiNee7t82bH3SeyUCt9UF15EVmaBvsppY2zQtrbIhl/yzBTny+YUxsVjSjQ6gaqaeVtZmGocom8TzBlA4Yw==}
     engines: {node: '>=16.9.0'}
@@ -1331,9 +1312,8 @@ snapshots:
 
   '@heiwa4126/clean-publish-scripts@0.0.4': {}
 
-  '@hono/node-server@1.19.7(hono@4.11.7)':
+  '@hono/node-server@1.19.9(hono@4.11.7)':
     dependencies:
-      hono: 4.11.7
       hono: 4.11.7
 
   '@jridgewell/gen-mapping@0.3.13':
@@ -1699,24 +1679,6 @@ snapshots:
       - utf-8-validate
 
   has-flag@4.0.0: {}
-
-  has-property-descriptors@1.0.2:
-    dependencies:
-      es-define-property: 1.0.1
-
-  has-proto@1.2.0:
-    dependencies:
-      dunder-proto: 1.0.1
-
-  has-symbols@1.1.0: {}
-
-  has-tostringtag@1.0.2:
-    dependencies:
-      has-symbols: 1.1.0
-
-  hasown@2.0.2:
-    dependencies:
-      function-bind: 1.1.2
 
   hono@4.11.7: {}
 
