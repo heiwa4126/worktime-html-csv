@@ -74,8 +74,16 @@ jobs:
       # - run: npm test
       ## このプロジェクトでは prepublishOnly に書いてあるので不要
 
+      - name: Show whether this is a pre-release or stable release
+        run: |
+          if [[ $GITHUB_REF_NAME == *-* ]]; then
+            echo "TAG=dev" >> "${GITHUB_ENV}"
+          else
+            echo "TAG=latest" >> "${GITHUB_ENV}"
+          fi
+
       - name: Publish to npm via OIDC (Trusted publishing)
-        run: npm publish --access public "$( [[ $GITHUB_REF_NAME == *-* ]] && echo --tag dev )"
+        run: npm publish --access public --tag "${TAG}"
         env:
           NODE_AUTH_TOKEN: "" # 念のため
 
