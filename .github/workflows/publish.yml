@@ -40,6 +40,6 @@ jobs:
       id-token: write # OIDC に必須
     steps:
       - name: Build and Publish
-        uses: heiwa4126/reusable-workflows/build-pnpm-package-and-publish@663ddef519c0033f16364f061210aaf4547515d2 # v0.0.7
+        uses: heiwa4126/reusable-workflows/build-pnpm-package-and-publish@82c6a19c7b3eafab050f35a0c2ca03b22f79e835 # v0.0.8
         with:
           checkout: true
