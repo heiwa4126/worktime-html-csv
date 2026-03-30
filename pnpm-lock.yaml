@@ -32,10 +32,10 @@ importers:
         version: 5.5.2
       '@vitest/coverage-v8':
         specifier: 4.0.18
-        version: 4.0.18(vitest@4.0.18(@types/node@25.3.3)(happy-dom@20.8.8)(tsx@4.21.0))
+        version: 4.0.18(vitest@4.0.18(@types/node@25.3.3)(happy-dom@20.8.9)(tsx@4.21.0))
       happy-dom:
         specifier: ^20.8.3
-        version: 20.8.8
+        version: 20.8.9
       hono:
         specifier: ^4.12.5
         version: 4.12.7
@@ -53,7 +53,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^4.0.18
-        version: 4.0.18(@types/node@25.3.3)(happy-dom@20.8.8)(tsx@4.21.0)
+        version: 4.0.18(@types/node@25.3.3)(happy-dom@20.8.9)(tsx@4.21.0)
 
 packages:
 
@@ -822,8 +822,8 @@ packages:
   get-tsconfig@4.13.6:
     resolution: {integrity: sha512-shZT/QMiSHc/YBLxxOkMtgSid5HFoauqCE3/exfsEcwg1WkeqjG+V40yBbBrsD+jW2HDXcs28xOfcbm2jI8Ddw==}
 
-  happy-dom@20.8.8:
-    resolution: {integrity: sha512-5/F8wxkNxYtsN0bXfMwIyNLZ9WYsoOYPbmoluqVJqv8KBUbcyKZawJ7uYK4WTX8IHBLYv+VXIwfeNDPy1oKMwQ==}
+  happy-dom@20.8.9:
+    resolution: {integrity: sha512-Tz23LR9T9jOGVZm2x1EPdXqwA37G/owYMxRwU0E4miurAtFsPMQ1d2Jc2okUaSjZqAFz2oEn3FLXC5a0a+siyA==}
     engines: {node: '>=20.0.0'}
 
   has-flag@4.0.0:
@@ -1605,7 +1605,7 @@ snapshots:
     dependencies:
       '@types/node': 25.3.3
 
-  '@vitest/coverage-v8@4.0.18(vitest@4.0.18(@types/node@25.3.3)(happy-dom@20.8.8)(tsx@4.21.0))':
+  '@vitest/coverage-v8@4.0.18(vitest@4.0.18(@types/node@25.3.3)(happy-dom@20.8.9)(tsx@4.21.0))':
     dependencies:
       '@bcoe/v8-coverage': 1.0.2
       '@vitest/utils': 4.0.18
@@ -1617,7 +1617,7 @@ snapshots:
       obug: 2.1.1
       std-env: 3.10.0
       tinyrainbow: 3.0.3
-      vitest: 4.0.18(@types/node@25.3.3)(happy-dom@20.8.8)(tsx@4.21.0)
+      vitest: 4.0.18(@types/node@25.3.3)(happy-dom@20.8.9)(tsx@4.21.0)
 
   '@vitest/expect@4.0.18':
     dependencies:
@@ -1778,7 +1778,7 @@ snapshots:
     dependencies:
       resolve-pkg-maps: 1.0.0
 
-  happy-dom@20.8.8:
+  happy-dom@20.8.9:
     dependencies:
       '@types/node': 25.3.3
       '@types/whatwg-mimetype': 3.0.2
@@ -2090,7 +2090,7 @@ snapshots:
       fsevents: 2.3.3
       tsx: 4.21.0
 
-  vitest@4.0.18(@types/node@25.3.3)(happy-dom@20.8.8)(tsx@4.21.0):
+  vitest@4.0.18(@types/node@25.3.3)(happy-dom@20.8.9)(tsx@4.21.0):
     dependencies:
       '@vitest/expect': 4.0.18
       '@vitest/mocker': 4.0.18(vite@7.3.1(@types/node@25.3.3)(tsx@4.21.0))
@@ -2114,7 +2114,7 @@ snapshots:
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 25.3.3
-      happy-dom: 20.8.8
+      happy-dom: 20.8.9
     transitivePeerDependencies:
       - jiti
       - less
