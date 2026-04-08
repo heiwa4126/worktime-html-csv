@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Browser IIFE Test - worktime-html-csv</title>
 	</head>
 	<body>
@@ -13,11 +13,11 @@
 		<script src="/dist/parse.browser.global.js"></script>
 
 		<script>
-		// IIFE版はグローバル変数 WorktimeHtmlCsv として利用可能
-    const { parseWorktimeHtmlToData, toWideArray } = WorktimeHtmlCsv;
+			// IIFE版はグローバル変数 WorktimeHtmlCsv として利用可能
+			const { parseWorktimeHtmlToData, toWideArray } = WorktimeHtmlCsv;
 
-    // テストHTMLデータ（test_data/test1.htmlから抜粋）
-    const testHtml = `<!DOCTYPE html>
+			// テストHTMLデータ（test_data/test1.htmlから抜粋）
+			const testHtml = `<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -52,36 +52,35 @@
 </body>
 </html>`;
 
-    try {
-      console.log('Testing Browser IIFE version...');
-      console.log('Global WorktimeHtmlCsv:', WorktimeHtmlCsv);
+			try {
+				console.log("Testing Browser IIFE version...");
+				console.log("Global WorktimeHtmlCsv:", WorktimeHtmlCsv);
 
-      // HTMLをパース
-      const rows = parseWorktimeHtmlToData(testHtml);
-      console.log('Parsed rows:', rows);
+				// HTMLをパース
+				const rows = parseWorktimeHtmlToData(testHtml);
+				console.log("Parsed rows:", rows);
 
-      // ワイド配列に変換
-      const wideArray = toWideArray(rows);
-      console.log('Wide array:', wideArray);
+				// ワイド配列に変換
+				const wideArray = toWideArray(rows);
+				console.log("Wide array:", wideArray);
 
-      // 基本的な検証
-      if (rows.length > 0) {
-        console.log('✅ parseWorktimeHtmlToData: OK');
-      } else {
-        console.error('❌ parseWorktimeHtmlToData: Failed - no rows parsed');
-      }
+				// 基本的な検証
+				if (rows.length > 0) {
+					console.log("✅ parseWorktimeHtmlToData: OK");
+				} else {
+					console.error("❌ parseWorktimeHtmlToData: Failed - no rows parsed");
+				}
 
-      if (wideArray.length > 0 && wideArray[0].includes('製造オーダ')) {
-        console.log('✅ toWideArray: OK');
-      } else {
-        console.error('❌ toWideArray: Failed');
-      }
+				if (wideArray.length > 0 && wideArray[0].includes("製造オーダ")) {
+					console.log("✅ toWideArray: OK");
+				} else {
+					console.error("❌ toWideArray: Failed");
+				}
 
-      console.log('✅ Browser IIFE test completed successfully!');
-
-    } catch (error) {
-      console.error('❌ Test failed:', error);
-    }
+				console.log("✅ Browser IIFE test completed successfully!");
+			} catch (error) {
+				console.error("❌ Test failed:", error);
+			}
 		</script>
 	</body>
 </html>

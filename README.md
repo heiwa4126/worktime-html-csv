@@ -50,7 +50,11 @@ console.log(toCSVString(wideArray));
 [examples/ex1.cjs](examples/ex1.cjs)
 
 ```javascript
-const { parseWorktimeHtmlToData, toWideArray, toCSVString } = require("@heiwa4126/worktime-html-csv");
+const {
+	parseWorktimeHtmlToData,
+	toWideArray,
+	toCSVString,
+} = require("@heiwa4126/worktime-html-csv");
 const { readFileSync } = require("fs");
 
 const html = readFileSync("worktime.html", "utf8");
@@ -77,10 +81,10 @@ import { parseWorktimeHtmlToData, toWideArray } from "@heiwa4126/worktime-html-c
 ```html
 <script src="path/to/parse.browser.global.js"></script>
 <script>
-  const html = document.documentElement.outerHTML;
-  const rows = WorktimeHtmlCsv.parseWorktimeHtmlToData(html);
-  const wideArray = WorktimeHtmlCsv.toWideArray(rows);
-  console.log(wideArray);
+	const html = document.documentElement.outerHTML;
+	const rows = WorktimeHtmlCsv.parseWorktimeHtmlToData(html);
+	const wideArray = WorktimeHtmlCsv.toWideArray(rows);
+	console.log(wideArray);
 </script>
 ```
 
@@ -88,16 +92,16 @@ ESM スクリプト版:
 
 ```html
 <script type="importmap">
-  {
-    "imports": {
-      "papaparse": "https://esm.sh/papaparse@5"
-    }
-  }
+	{
+		"imports": {
+			"papaparse": "https://esm.sh/papaparse@5"
+		}
+	}
 </script>
 <script type="module">
-  import { parseWorktimeHtmlToData, toWideArray } from "path/to/parse.browser.js";
-  const rows = parseWorktimeHtmlToData(testHtml);
-  const wideArray = toWideArray(rows);
+	import { parseWorktimeHtmlToData, toWideArray } from "path/to/parse.browser.js";
+	const rows = parseWorktimeHtmlToData(testHtml);
+	const wideArray = toWideArray(rows);
 </script>
 ```
 
@@ -156,7 +160,6 @@ pnpm run prepublishOnly
 3. ブラウザでテストページを開く:
 
    <http://localhost:3000/> をブラウザで開くと、以下が表示されます
-
    - classic.html - 見た目がつまらない.ブラウザのコンソール(F12)で結果を確認
    - classic2.html - ボタンを押すと画面更新&クリップボードにコピーされる
    - esm.html - 見た目がつまらない.ブラウザのコンソール(F12)で結果を確認
@@ -177,11 +180,11 @@ npmjs 経由で各 CDN に出まわったら
 
 ```html
 <script type="importmap">
-  {
-    "imports": {
-      "papaparse": "https://esm.sh/papaparse@5"
-    }
-  }
+	{
+		"imports": {
+			"papaparse": "https://esm.sh/papaparse@5"
+		}
+	}
 </script>
 ```
 

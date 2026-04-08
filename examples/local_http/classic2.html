@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Browser IIFE Test 2 - worktime-html-csv</title>
 		<!-- IIFE版のブラウザライブラリをロード -->
 		<script src="/dist/parse.browser.global.js"></script>
@@ -718,56 +718,56 @@
 			</table>
 		</form>
 		<script>
-		const { parseWorktimeDomToData, toWideArray, toCSVString  } = WorktimeHtmlCsv;
+			const { parseWorktimeDomToData, toWideArray, toCSVString } = WorktimeHtmlCsv;
 
-function test() {
-	try {
-		console.log('Testing Browser IIFE version...');
-		console.log('Global WorktimeHtmlCsv:', WorktimeHtmlCsv);
+			function test() {
+				try {
+					console.log("Testing Browser IIFE version...");
+					console.log("Global WorktimeHtmlCsv:", WorktimeHtmlCsv);
 
-		// HTMLをパース
-		const rows = parseWorktimeDomToData(document);
-		console.log('Parsed rows:', rows);
+					// HTMLをパース
+					const rows = parseWorktimeDomToData(document);
+					console.log("Parsed rows:", rows);
 
-		// 基本的な検証
-		if (rows.length > 0) {
-			console.log('✅ parseWorktimeDomToData: OK');
-		} else {
-			console.error('❌ parseWorktimeDomToData: Failed - no rows parsed');
-		}
+					// 基本的な検証
+					if (rows.length > 0) {
+						console.log("✅ parseWorktimeDomToData: OK");
+					} else {
+						console.error("❌ parseWorktimeDomToData: Failed - no rows parsed");
+					}
 
-		// ワイド配列に変換
-		const wideArray = toWideArray(rows);
-		console.log('Wide array:', wideArray);
+					// ワイド配列に変換
+					const wideArray = toWideArray(rows);
+					console.log("Wide array:", wideArray);
 
-		if (wideArray.length > 0 && wideArray[0].includes('製造オーダ')) {
-			console.log('✅ toWideArray: OK');
-		} else {
-			console.error('❌ toWideArray: Failed');
-		}
+					if (wideArray.length > 0 && wideArray[0].includes("製造オーダ")) {
+						console.log("✅ toWideArray: OK");
+					} else {
+						console.error("❌ toWideArray: Failed");
+					}
 
-		// CSV文字列に変換
-		const csv = toCSVString(wideArray);
-		console.log('CSV output:\n', csv);
+					// CSV文字列に変換
+					const csv = toCSVString(wideArray);
+					console.log("CSV output:\n", csv);
 
-		// 結果を画面に表示
-		document.getElementById('csv').textContent = csv;
+					// 結果を画面に表示
+					document.getElementById("csv").textContent = csv;
 
-		// CSVをクリップボードにコピー
-		navigator.clipboard.writeText(csv)
-			.then(() => {
-				console.log('✅ CSV copied to clipboard');
-			})
-			.catch(err => {
-				console.error('❌ Failed to copy to clipboard:', err);
-			});
+					// CSVをクリップボードにコピー
+					navigator.clipboard
+						.writeText(csv)
+						.then(() => {
+							console.log("✅ CSV copied to clipboard");
+						})
+						.catch((err) => {
+							console.error("❌ Failed to copy to clipboard:", err);
+						});
 
-		console.log('✅ Browser IIFE test completed successfully!');
-
-	} catch (error) {
-		console.error('❌ Test failed:', error);
-	}
-}
+					console.log("✅ Browser IIFE test completed successfully!");
+				} catch (error) {
+					console.error("❌ Test failed:", error);
+				}
+			}
 		</script>
 	</body>
 </html>
