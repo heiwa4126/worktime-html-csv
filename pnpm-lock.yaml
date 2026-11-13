@@ -20,7 +20,7 @@ importers:
         version: 0.0.6
       '@hono/node-server':
         specifier: ^2.0.8
-        version: 2.1.5(hono@4.13.14)
+        version: 2.1.5(hono@4.13.16)
       '@types/node':
         specifier: ^26.1.0
         version: 26.6.5
@@ -35,7 +35,7 @@ importers:
         version: 21.0.4
       hono:
         specifier: ^4.12.27
-        version: 4.13.14
+        version: 4.13.16
       npm-run-all2:
         specifier: ^9.0.2
         version: 9.0.4
@@ -991,8 +991,8 @@ packages:
     resolution: {integrity: sha512-tFm+GaLBgo6o0awHnvHaNoraVo27qJ+2tZEtZ+cIa08hXbeitrxAJajLI05hsUy/2/YTKcUjQYzHe5mCcraLBw==}
     engines: {node: '>=20.0.0'}
 
-  hono@4.13.14:
-    resolution: {integrity: sha512-yhRLQ21U6qa9Hsu2N7Qcbh8tE+WKEcoErjIo56LeSGiGXGp9sA7UpE86Ui9uexb61KakiGwuHMn2QdV7w6i6kQ==}
+  hono@4.13.16:
+    resolution: {integrity: sha512-AOLOEhvrV+iH92xXCnFr/5+3KjPKcI3xP63XJtX5spAnkznPdHijlIsUTpi7/9EhWqrTCekw5c5zh1K+YsVw7A==}
     engines: {node: '>=16.9.0'}
 
   hookable@6.1.2:
@@ -1553,9 +1553,9 @@ snapshots:
 
   '@heiwa4126/clean-publish-scripts@0.0.6': {}
 
-  '@hono/node-server@2.1.5(hono@4.13.14)':
+  '@hono/node-server@2.1.5(hono@4.13.16)':
     dependencies:
-      hono: 4.13.14
+      hono: 4.13.16
 
   '@jridgewell/resolve-uri@3.1.2': {}
 
@@ -2032,7 +2032,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  hono@4.13.14: {}
+  hono@4.13.16: {}
 
   hookable@6.1.2: {}
 
